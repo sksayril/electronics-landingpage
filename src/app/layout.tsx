@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import { Outfit } from "next/font/google";
 import "./globals.css";
+import CustomCursor from "../components/CustomCursor";
+import GateLoader from "../components/GateLoader";
+import AmbientMusic from "../components/AmbientMusic";
 
 const outfit = Outfit({
   variable: "--font-outfit",
@@ -9,9 +12,9 @@ const outfit = Outfit({
 });
 
 export const metadata: Metadata = {
-  title: "Consumer Electronics & Home Appliances | LG India",
-  description: "Explore LG's wide range of smart home appliances, OLED TVs, energy-efficient air conditioners, dual-cool refrigerators, and high-performance monitors. Life's Good!",
-  keywords: ["LG India", "OLED TV", "Washing Machine", "Smart Refrigerator", "Air Conditioner", "Gaming Monitor", "ThinQ AI"],
+  title: "Consumer Electronics & Home Appliances | KEUKEN",
+  description: "Explore KEUKEN's wide range of smart home appliances, OLED TVs, energy-efficient air conditioners, dual-cool refrigerators, and high-performance monitors.",
+  keywords: ["KEUKEN", "OLED TV", "Washing Machine", "Smart Refrigerator", "Air Conditioner", "Gaming Monitor", "KEUKEN Connect"],
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
@@ -20,7 +23,12 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
       lang="en"
       className={`${outfit.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col font-sans bg-white text-[#111111]">{children}</body>
+      <body className="min-h-full flex flex-col font-sans bg-white text-[#111111]">
+        <CustomCursor />
+        <GateLoader />
+        <AmbientMusic />
+        {children}
+      </body>
     </html>
   );
 }

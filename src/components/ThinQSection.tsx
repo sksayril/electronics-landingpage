@@ -87,7 +87,7 @@ export default function ThinQSection() {
         [label]: value,
       },
     }));
-    triggerNotification(`ThinQ App updated ${devices.find(d => d.id === deviceId)?.name} ${label} to "${value}"`);
+    triggerNotification(`KEUKEN Connect App updated ${devices.find(d => d.id === deviceId)?.name} ${label} to "${value}"`);
   };
 
   const triggerNotification = (msg: string) => {
@@ -113,7 +113,7 @@ export default function ThinQSection() {
             SMART IOT HOME ECOSYSTEM
           </span>
           <h2 className="text-3xl sm:text-4xl font-extrabold uppercase mt-4 tracking-tight leading-tight font-sans">
-            LG ThinQ® Connected Intelligence
+            KEUKEN Connect™ Smart Ecosystem
           </h2>
           <p className="text-sm sm:text-base text-gray-400 mt-2 max-w-xl mx-auto font-light">
             Manage your entire home ecosystem seamlessly from your smartphone. Adjust settings, check energy usage, and automate routines.
@@ -199,14 +199,14 @@ export default function ThinQSection() {
               <div className="relative pt-2 pb-3 px-3 border-b border-zinc-900 flex justify-between items-center text-[10px] text-gray-500 font-bold tracking-wider">
                 <span className="text-white">9:41 AM</span>
                 <span className="text-brand-red flex items-center gap-1">
-                  <Wifi className="h-3 w-3" /> ThinQ AI Connected
+                  <Wifi className="h-3 w-3" /> KEUKEN Connect
                 </span>
               </div>
 
               {/* Screen Content */}
               <div className="flex-1 overflow-y-auto px-1 py-4 no-scrollbar">
                 
-                {/* Thinq App logo and greeting */}
+                {/* KEUKEN Connect App logo and greeting */}
                 <div className="flex items-center gap-2 mb-6">
                   <div className="h-7 w-7 rounded-full bg-brand-red flex items-center justify-center text-white">
                     <Smartphone className="h-4 w-4" />

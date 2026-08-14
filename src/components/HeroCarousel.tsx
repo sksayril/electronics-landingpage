@@ -25,7 +25,7 @@ export default function HeroCarousel() {
       id: 1,
       image: "/images/hero_oled_tv.png",
       badge: "NEW LAUNCH",
-      title: "LG OLED evo C4 Series",
+      title: "KEUKEN OLED evo C4 Series",
       description: "Experience the pinnacle of brightness and detail. Driven by the new α9 Gen7 AI Processor, pixel-level dimming delivers pure blacks and endless contrast.",
       features: ["α9 AI Processor Gen7", "Brightness Booster Max", "144Hz Gaming Refresh Rate", "Dolby Vision & Atmos"],
       ctaUrl: "#tvs",
@@ -103,7 +103,7 @@ export default function HeroCarousel() {
                   alt={slide.title}
                   fill
                   priority={idx === 0}
-                  className="object-cover object-right md:object-center"
+                  className={`object-cover object-right md:object-center ${idx === currentSlide ? "animate-ken-burns" : ""}`}
                 />
               )}
             </div>
@@ -113,7 +113,7 @@ export default function HeroCarousel() {
               
               {/* Text Area */}
               <div className="md:col-span-7 flex flex-col items-start gap-4 sm:gap-6 animate-slide-up">
-                <span className="px-3 py-1 bg-brand-red text-white text-xs font-bold rounded-md tracking-widest uppercase">
+                <span className="px-3 py-1 bg-brand-red text-white text-xs font-bold rounded-md tracking-widest uppercase animate-float">
                   {slide.badge}
                 </span>
                 

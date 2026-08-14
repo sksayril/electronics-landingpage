@@ -8,6 +8,7 @@ import ProductShowcase from "../components/ProductShowcase";
 import ThinQSection from "../components/ThinQSection";
 import PromoSection from "../components/PromoSection";
 import Footer from "../components/Footer";
+import ScrollReveal from "../components/ScrollReveal";
 import { X, Heart, ShoppingCart, ArrowRight } from "lucide-react";
 import Image from "next/image";
 
@@ -29,7 +30,7 @@ export default function Home() {
   const allProducts: Record<string, WishlistItem> = {
     "tv-oled-55": {
       id: "tv-oled-55",
-      name: "LG OLED evo AI C4 55\" Smart TV",
+      name: "KEUKEN OLED evo AI C4 55\" Smart TV",
       price: 139990,
       image: "https://images.unsplash.com/photo-1593305841991-05c297ba4575?auto=format&fit=crop&w=150&q=80",
     },
@@ -59,13 +60,13 @@ export default function Home() {
     },
     "laptop-gram-16": {
       id: "laptop-gram-16",
-      name: "LG Gram 16\" Intel Core Ultra 7 Laptop",
+      name: "KEUKEN Gram 16\" Intel Core Ultra 7 Laptop",
       price: 119990,
       image: "https://images.unsplash.com/photo-1496181130204-755241544e35?auto=format&fit=crop&w=150&q=80",
     },
     "tv-uhd-43": {
       id: "tv-uhd-43",
-      name: "LG UHD 4K 43\" Smart WebOS TV",
+      name: "KEUKEN UHD 4K 43\" Smart WebOS TV",
       price: 32990,
       image: "https://images.unsplash.com/photo-1593784991095-a205069470b6?auto=format&fit=crop&w=150&q=80",
     },
@@ -116,17 +117,34 @@ export default function Home() {
       />
 
       {/* Main Sections */}
-      <main className="flex-1">
+      <main className="flex-grow">
+        {/* Hero Banner Slider */}
         <HeroCarousel />
-        <CategoryGrid />
-        <ProductShowcase
-          wishlistIds={wishlistIds}
-          toggleWishlist={toggleWishlist}
-          addToCart={addToCart}
-          postalCode={postalCode}
-        />
-        <ThinQSection />
-        <PromoSection />
+
+        {/* Product Categories Selector */}
+        <ScrollReveal direction="up" delay={50} duration={800}>
+          <CategoryGrid />
+        </ScrollReveal>
+
+        {/* Dynamic Products Showcase tabbed grid */}
+        <ScrollReveal direction="up" delay={50} duration={800}>
+          <ProductShowcase
+            wishlistIds={wishlistIds}
+            toggleWishlist={toggleWishlist}
+            addToCart={addToCart}
+            postalCode={postalCode}
+          />
+        </ScrollReveal>
+
+        {/* ThinQ IoT Connected Ecosystem Dashboard showcase */}
+        <ScrollReveal direction="up" delay={50} duration={800}>
+          <ThinQSection />
+        </ScrollReveal>
+
+        {/* Promos, Maintenance & AMC section */}
+        <ScrollReveal direction="up" delay={50} duration={800}>
+          <PromoSection />
+        </ScrollReveal>
       </main>
 
       {/* Footer */}

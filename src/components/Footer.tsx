@@ -43,7 +43,7 @@ export default function Footer() {
   const [showChatbox, setShowChatbox] = useState(false);
   const [chatMessage, setChatMessage] = useState("");
   const [chatHistory, setChatHistory] = useState<{ sender: "user" | "bot"; text: string }[]>([
-    { sender: "bot", text: "Hello! Welcome to LG Smart Assistant. How can we help you today?" },
+    { sender: "bot", text: "Hello! Welcome to KEUKEN Smart Assistant. How can we help you today?" },
   ]);
 
   useEffect(() => {
@@ -68,14 +68,14 @@ export default function Footer() {
 
     // Simulate bot response after 1s
     setTimeout(() => {
-      let botResponse = "Thank you for contacting us! An LG representative will connect with you shortly.";
+      let botResponse = "Thank you for contacting us! A KEUKEN representative will connect with you shortly.";
       const lower = userMsg.toLowerCase();
       if (lower.includes("oled") || lower.includes("tv")) {
-        botResponse = "Our brand new LG OLED C4 series is eligible for a free soundbar and 3-year warranty. Would you like us to schedule a home demo?";
+        botResponse = "Our brand new KEUKEN OLED C4 series is eligible for a free soundbar and 3-year warranty. Would you like us to schedule a home demo?";
       } else if (lower.includes("delivery") || lower.includes("shipping")) {
         botResponse = "We offer free delivery and installation within 2-3 business days. Enter your pincode in the top bar to verify exact dates!";
       } else if (lower.includes("ac") || lower.includes("cooling")) {
-        botResponse = "All LG 2026 Dual Inverter Air Conditioners are equipped with AI Convertible cooling and carry a 10-year compressor warranty.";
+        botResponse = "All KEUKEN 2026 Dual Inverter Air Conditioners are equipped with AI Convertible cooling and carry a 10-year compressor warranty.";
       }
       setChatHistory((prev) => [...prev, { sender: "bot", text: botResponse }]);
     }, 1000);
@@ -96,7 +96,7 @@ export default function Footer() {
             <li><a href="#tvs" className="hover:text-white transition-colors">OLED evo TVs</a></li>
             <li><a href="#tvs" className="hover:text-white transition-colors">QNED MiniLED TVs</a></li>
             <li><a href="#tvs" className="hover:text-white transition-colors">UHD 4K Smart TVs</a></li>
-            <li><a href="#tvs" className="hover:text-white transition-colors">LG Soundbars & Speakers</a></li>
+            <li><a href="#tvs" className="hover:text-white transition-colors">KEUKEN Soundbars & Speakers</a></li>
           </ul>
         </div>
 
@@ -147,7 +147,7 @@ export default function Footer() {
         {/* Left Side */}
         <div className="flex flex-col gap-2 text-center md:text-left">
           <p className="text-gray-500 text-xs">
-            © {new Date().getFullYear()} LG Electronics India. All rights reserved.
+            © {new Date().getFullYear()} KEUKEN Electronics India. All rights reserved.
           </p>
           <p className="text-[10px] text-gray-600 max-w-md leading-relaxed font-light">
             Disclaimer: This application is a high-fidelity simulated landing page showcase demonstrating Next.js App Router and Tailwind CSS. All trademarks are the property of their respective owners.
@@ -194,7 +194,7 @@ export default function Footer() {
                 <div className="h-3 w-3 bg-white rounded-full animate-ping"></div>
                 <div className="h-3 w-3 bg-white rounded-full absolute"></div>
                 <div>
-                  <h4 className="font-bold text-sm">LG Smart Assistant</h4>
+                  <h4 className="font-bold text-sm">KEUKEN Smart Assistant</h4>
                   <span className="text-[10px] text-white/95">Typically replies instantly</span>
                 </div>
               </div>

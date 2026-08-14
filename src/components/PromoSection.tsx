@@ -8,7 +8,7 @@ export default function PromoSection() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           
-          {/* Promo Card 1: LG Best Care */}
+          {/* Promo Card 1: KEUKEN Best Care */}
           <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-zinc-950 via-[#13070b] to-[#250d15] text-white p-8 md:p-10 flex flex-col justify-between h-[300px] md:h-[350px] shadow-lg group hover:shadow-2xl transition-all duration-300">
             
             {/* Background glowing sphere */}
@@ -16,13 +16,13 @@ export default function PromoSection() {
 
             <div className="relative z-10 flex flex-col items-start gap-4">
               <span className="flex items-center gap-1.5 px-3 py-1 bg-brand-red text-white text-[10px] font-bold rounded-full uppercase tracking-wider">
-                <ShieldCheck className="h-3 w-3" /> LG Best Care®
+                <ShieldCheck className="h-3 w-3" /> KEUKEN Best Care®
               </span>
               <h3 className="text-2xl md:text-3xl font-extrabold uppercase tracking-tight leading-tight mt-1">
                 Annual Maintenance & Warranty
               </h3>
               <p className="text-xs md:text-sm text-gray-300 max-w-sm mt-1 font-light leading-relaxed">
-                Protect your home electronics with certified LG spare parts, free labor coverage, and support by factory-trained expert engineers.
+                Protect your home electronics with certified KEUKEN spare parts, free labor coverage, and support by factory-trained expert engineers.
               </p>
             </div>
 

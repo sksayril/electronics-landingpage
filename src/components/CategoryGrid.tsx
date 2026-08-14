@@ -75,7 +75,7 @@ export default function CategoryGrid() {
         {/* Title */}
         <div className="text-center mb-10">
           <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-[#111111] uppercase font-sans">
-            Explore LG Product Categories
+            Explore KEUKEN Product Categories
           </h2>
           <div className="h-1 w-16 bg-brand-red mx-auto mt-3 rounded-full"></div>
         </div>
@@ -86,7 +86,7 @@ export default function CategoryGrid() {
             <button
               key={idx}
               onClick={() => handleCategoryClick(category.hash)}
-              className={`group flex flex-col items-center p-5 rounded-2xl border border-gray-100 bg-white shadow-xs hover:shadow-md transition-all duration-300 ${category.borderColor} text-center relative cursor-pointer`}
+              className={`group flex flex-col items-center p-5 rounded-2xl border border-gray-100 bg-white shadow-xs hover:shadow-lg hover:-translate-y-1.5 transition-all duration-300 ${category.borderColor} text-center relative cursor-pointer`}
             >
               {/* Optional Hot Tag */}
               {category.tag && (

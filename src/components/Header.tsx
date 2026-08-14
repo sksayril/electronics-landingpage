@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { Search, ShoppingBag, Heart, MapPin, User, Menu, X, ArrowRight, ShieldCheck, HelpCircle } from "lucide-react";
+import Image from "next/image";
 
 interface HeaderProps {
   cartCount: number;
@@ -35,7 +36,7 @@ export default function Header({
   };
 
   const trendingSearches = [
-    "LG OLED C4 55 inch",
+    "KEUKEN OLED C4 55 inch",
     "InstaView Refrigerator",
     "AI Front Load Washing Machine",
     "UltraGear OLED Gaming Monitor",
@@ -57,7 +58,7 @@ export default function Header({
       <div className="bg-gray-100 border-b border-gray-200 text-[11px] sm:text-xs text-gray-600 hidden md:block">
         <div className="max-w-7xl mx-auto px-6 h-9 flex justify-between items-center">
           <div className="flex gap-4 items-center">
-            <span className="font-semibold text-brand-red">ThinQ® Smart Connection</span>
+            <span className="font-semibold text-brand-red">KEUKEN Connect™</span>
             <span className="h-3 w-px bg-gray-300"></span>
             <a href="#find-store" className="hover:text-black flex items-center gap-1">
               <MapPin className="h-3 w-3" /> Find a Store
@@ -69,7 +70,7 @@ export default function Header({
             </a>
             <span className="h-3 w-px bg-gray-300"></span>
             <a href="#warranty" className="hover:text-black flex items-center gap-1">
-              <ShieldCheck className="h-3 w-3" /> LG Care & Warranty
+              <ShieldCheck className="h-3 w-3" /> KEUKEN Care & Warranty
             </a>
           </div>
         </div>
@@ -88,28 +89,17 @@ export default function Header({
               {isMobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
             </button>
 
-            {/* LG Logo SVG */}
+            {/* KEUKEN Logo */}
             <a href="#" className="flex items-center gap-2">
-              <div className="relative w-8 h-8 sm:w-10 sm:h-10 bg-brand-red rounded-full flex items-center justify-center text-white shadow-md">
-                {/* SVG representing LG smiley face */}
-                <svg viewBox="0 0 100 100" className="w-6 h-6 sm:w-8 sm:h-8 fill-none stroke-white stroke-[6]">
-                  {/* Outer circle */}
-                  <circle cx="50" cy="50" r="42" className="stroke-white" />
-                  {/* Eye dot */}
-                  <circle cx="38" cy="35" r="5" className="fill-white stroke-none" />
-                  {/* Nose 'L' */}
-                  <path d="M 52 28 L 52 50 L 68 50" strokeLinecap="round" strokeLinejoin="round" />
-                  {/* Smile 'G' */}
-                  <path d="M 76 50 A 26 26 0 1 1 50 24" strokeLinecap="round" />
-                </svg>
-              </div>
-              <div className="flex flex-col leading-none">
-                <span className="text-xl sm:text-2xl font-extrabold tracking-tighter text-[#202020] uppercase font-sans">
-                  LG
-                </span>
-                <span className="text-[7px] sm:text-[9px] font-bold text-gray-500 tracking-widest uppercase">
-                  Life's Good
-                </span>
+              <div className="relative h-11 sm:h-14 w-auto flex items-center">
+                <Image 
+                  src="/images/keuken-logo.png" 
+                  alt="KEUKEN Logo" 
+                  width={150} 
+                  height={50} 
+                  className="h-full w-auto object-contain" 
+                  priority
+                />
               </div>
             </a>
           </div>
@@ -120,7 +110,7 @@ export default function Header({
             <a href="#appliances" className="hover:text-brand-red transition-colors py-2 border-b-2 border-transparent hover:border-brand-red">Home Appliances</a>
             <a href="#ac" className="hover:text-brand-red transition-colors py-2 border-b-2 border-transparent hover:border-brand-red">Air Conditioners</a>
             <a href="#monitors" className="hover:text-brand-red transition-colors py-2 border-b-2 border-transparent hover:border-brand-red">Monitors & Laptops</a>
-            <a href="#thinq" className="hover:text-brand-red transition-colors py-2 border-b-2 border-transparent hover:border-brand-red text-brand-red">ThinQ® AI</a>
+            <a href="#thinq" className="hover:text-brand-red transition-colors py-2 border-b-2 border-transparent hover:border-brand-red text-brand-red">KEUKEN Connect™</a>
           </nav>
 
           {/* Right Controls */}
@@ -199,7 +189,7 @@ export default function Header({
             <a href="#appliances" onClick={() => setIsMobileMenuOpen(false)} className="font-bold text-lg hover:text-brand-red py-1">Home Appliances</a>
             <a href="#ac" onClick={() => setIsMobileMenuOpen(false)} className="font-bold text-lg hover:text-brand-red py-1">Air Conditioners</a>
             <a href="#monitors" onClick={() => setIsMobileMenuOpen(false)} className="font-bold text-lg hover:text-brand-red py-1">Monitors & Laptops</a>
-            <a href="#thinq" onClick={() => setIsMobileMenuOpen(false)} className="font-bold text-brand-red py-1">ThinQ® AI Smart Home</a>
+            <a href="#thinq" onClick={() => setIsMobileMenuOpen(false)} className="font-bold text-brand-red py-1">KEUKEN Connect™ Smart Home</a>
             <div className="h-px bg-gray-200 my-2"></div>
             <div className="flex justify-between text-sm text-gray-500 font-medium pb-2">
               <a href="#support">Customer Support</a>

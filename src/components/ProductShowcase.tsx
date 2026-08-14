@@ -38,7 +38,7 @@ export default function ProductShowcase({
       {
         id: "tv-oled-55",
         category: "tvs",
-        name: "LG OLED evo AI C4 55\" Smart TV",
+        name: "KEUKEN OLED evo AI C4 55\" Smart TV",
         model: "OLED55C4PSA",
         image: "https://images.unsplash.com/photo-1593305841991-05c297ba4575?auto=format&fit=crop&w=400&q=80",
         rating: 4.9,
@@ -56,7 +56,7 @@ export default function ProductShowcase({
         image: "https://images.unsplash.com/photo-1571175432247-f404af3a0ca5?auto=format&fit=crop&w=400&q=80",
         rating: 4.8,
         reviews: 112,
-        features: ["Knock Twice to See Inside", "UVnano™ Water Dispenser", "Dual Craft Ice Maker", "Smart ThinQ® Wifi"],
+        features: ["Knock Twice to See Inside", "UVnano™ Water Dispenser", "Dual Craft Ice Maker", "KEUKEN Connect™ Wifi"],
         mrp: 249990,
         price: 194990,
         badge: "PREMIUM",
@@ -105,7 +105,7 @@ export default function ProductShowcase({
       {
         id: "laptop-gram-16",
         category: "monitors",
-        name: "LG Gram 16\" Intel Core Ultra 7 Laptop",
+        name: "KEUKEN Gram 16\" Intel Core Ultra 7 Laptop",
         model: "16Z90S-G.AH78A2",
         image: "https://images.unsplash.com/photo-1496181130204-755241544e35?auto=format&fit=crop&w=400&q=80",
         rating: 4.8,
@@ -120,7 +120,7 @@ export default function ProductShowcase({
       {
         id: "tv-uhd-43",
         category: "tvs",
-        name: "LG UHD 4K 43\" Smart WebOS TV",
+        name: "KEUKEN UHD 4K 43\" Smart WebOS TV",
         model: "43UR7500PSC",
         image: "https://images.unsplash.com/photo-1593784991095-a205069470b6?auto=format&fit=crop&w=400&q=80",
         rating: 4.7,
@@ -176,7 +176,7 @@ export default function ProductShowcase({
             <h2 className="text-2xl sm:text-3xl font-extrabold uppercase text-[#111111] tracking-tight font-sans">
               Featured Innovations
             </h2>
-            <p className="text-sm text-gray-500 mt-1 font-medium">Explore handpicked deals and new technology from LG</p>
+            <p className="text-sm text-gray-500 mt-1 font-medium">Explore handpicked deals and new technology from KEUKEN</p>
           </div>
 
           {/* Navigation Tabs */}
@@ -218,12 +218,12 @@ export default function ProductShowcase({
               <div
                 key={prod.id}
                 id={prod.category}
-                className="bg-white rounded-2xl border border-gray-200 overflow-hidden shadow-xs hover:shadow-xl transition-all duration-300 flex flex-col group relative"
+                className="bg-white rounded-2xl border border-gray-200 overflow-hidden shadow-xs hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 flex flex-col group relative"
               >
                 {/* Badges Overlay */}
                 <div className="absolute top-3 left-3 z-10 flex flex-col gap-1.5">
                   {prod.badge && (
-                    <span className="bg-brand-red text-white text-[9px] font-bold px-2.5 py-1 rounded-md uppercase tracking-wider shadow-xs">
+                    <span className="bg-brand-red text-white text-[9px] font-bold px-2.5 py-1 rounded-md uppercase tracking-wider shadow-xs bg-gradient-to-r from-[#A50034] via-red-400 to-[#A50034] bg-[length:200%_auto] animate-shimmer">
                       {prod.badge}
                     </span>
                   )}
@@ -247,7 +247,7 @@ export default function ProductShowcase({
                     src={prod.image}
                     alt={prod.name}
                     fill
-                    className="object-cover transition-transform duration-500 group-hover:scale-105"
+                    className="object-cover transition-transform duration-500 group-hover:scale-110"
                   />
                   <div className="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
                 </div>
