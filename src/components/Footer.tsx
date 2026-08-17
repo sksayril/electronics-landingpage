@@ -136,6 +136,7 @@ export default function Footer() {
             <li><a href="#support" className="hover:text-white transition-colors">Request Repair Service</a></li>
             <li><a href="#support" className="hover:text-white transition-colors">Download User Manuals</a></li>
             <li><a href="#support" className="hover:text-white transition-colors">Track Service Request</a></li>
+            <li className="pt-1"><a href="/admin" className="text-brand-red font-bold hover:text-brand-red-hover hover:underline transition-colors flex items-center gap-1">Admin Dashboard</a></li>
           </ul>
         </div>
 

@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Star, Heart, ShoppingCart, Info, Award, HelpCircle } from "lucide-react";
 import Image from "next/image";
+import { useApp } from "../context/AppContext";
 
 interface Product {
   id: string;
@@ -146,6 +147,8 @@ export default function ProductShowcase({
     ],
   };
 
+  const { triggerEnquiry } = useApp();
+  const [enquiredProducts, setEnquiredProducts] = useState<string[]>([]);
   const currentProducts = products[activeTab];
 
   const formatPrice = (value: number) => {
@@ -319,10 +322,15 @@ export default function ProductShowcase({
                     {/* Buttons */}
                     <div className="flex gap-2 mt-4">
                       <button
-                        onClick={() => addToCart(prod.name)}
-                        className="flex-1 py-2 px-3 bg-brand-red hover:bg-brand-red-hover text-white text-xs font-bold rounded-lg transition-colors cursor-pointer hover:scale-102 transform duration-200"
+                        onClick={() => {
+                          if (!enquiredProducts.includes(prod.id)) {
+                            setEnquiredProducts((prev) => [...prev, prod.id]);
+                          }
+                          triggerEnquiry(prod.name);
+                        }}
+                        className="flex-1 py-2 px-3 bg-brand-red hover:bg-brand-red-hover text-white text-xs font-bold rounded-lg transition-colors cursor-pointer hover:scale-102 transform duration-200 text-center"
                       >
-                        Buy Now
+                        {enquiredProducts.includes(prod.id) ? "Enquire Now" : "Buy Now"}
                       </button>
                       <button
                         onClick={() => addToCart(prod.name)}

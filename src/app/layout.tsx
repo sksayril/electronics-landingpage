@@ -4,6 +4,7 @@ import "./globals.css";
 import CustomCursor from "../components/CustomCursor";
 import GateLoader from "../components/GateLoader";
 import AmbientMusic from "../components/AmbientMusic";
+import { AppProvider } from "../context/AppContext";
 
 const outfit = Outfit({
   variable: "--font-outfit",
@@ -24,10 +25,12 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
       className={`${outfit.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col font-sans bg-white text-[#111111]">
-        <CustomCursor />
-        <GateLoader />
-        <AmbientMusic />
-        {children}
+        <AppProvider>
+          <CustomCursor />
+          <GateLoader />
+          <AmbientMusic />
+          {children}
+        </AppProvider>
       </body>
     </html>
   );

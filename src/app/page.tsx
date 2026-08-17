@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useApp } from "../context/AppContext";
 import Header from "../components/Header";
 import HeroCarousel from "../components/HeroCarousel";
 import CategoryGrid from "../components/CategoryGrid";
@@ -9,6 +9,7 @@ import ThinQSection from "../components/ThinQSection";
 import PromoSection from "../components/PromoSection";
 import Footer from "../components/Footer";
 import ScrollReveal from "../components/ScrollReveal";
+import EnquirySection from "../components/EnquirySection";
 import { X, Heart, ShoppingCart, ArrowRight } from "lucide-react";
 import Image from "next/image";
 
@@ -20,11 +21,19 @@ interface WishlistItem {
 }
 
 export default function Home() {
-  const [cartCount, setCartCount] = useState(0);
-  const [wishlistIds, setWishlistIds] = useState<string[]>(["tv-oled-55"]); // Preset one liked item
-  const [postalCode, setPostalCode] = useState("110001");
-  const [showWishlistModal, setShowWishlistModal] = useState(false);
-  const [cartNotification, setCartNotification] = useState<string | null>(null);
+  const {
+    cartCount,
+    setCartCount,
+    wishlistIds,
+    setWishlistIds,
+    postalCode,
+    setPostalCode,
+    showWishlistModal,
+    setShowWishlistModal,
+    addToCart,
+    toggleWishlist,
+    cartNotification,
+  } = useApp();
 
   // Database map for liked items in modal
   const allProducts: Record<string, WishlistItem> = {
@@ -78,25 +87,6 @@ export default function Home() {
     },
   };
 
-  const toggleWishlist = (id: string) => {
-    setWishlistIds((prev) => {
-      const isExist = prev.includes(id);
-      if (isExist) {
-        return prev.filter((item) => item !== id);
-      } else {
-        return [...prev, id];
-      }
-    });
-  };
-
-  const addToCart = (productName: string) => {
-    setCartCount((prev) => prev + 1);
-    setCartNotification(`"${productName}" added to shopping basket!`);
-    setTimeout(() => {
-      setCartNotification((prev) => (prev === `"${productName}" added to shopping basket!` ? null : prev));
-    }, 4000);
-  };
-
   const formatPrice = (value: number) => {
     return new Intl.NumberFormat("en-IN", {
       style: "currency",
@@ -144,6 +134,11 @@ export default function Home() {
         {/* Promos, Maintenance & AMC section */}
         <ScrollReveal direction="up" delay={50} duration={800}>
           <PromoSection />
+        </ScrollReveal>
+
+        {/* Product & Service Enquiry Form */}
+        <ScrollReveal direction="up" delay={50} duration={800}>
+          <EnquirySection />
         </ScrollReveal>
       </main>
 

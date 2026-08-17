@@ -4,21 +4,25 @@ import { useState } from "react";
 import { Search, ShoppingBag, Heart, MapPin, User, Menu, X, ArrowRight, ShieldCheck, HelpCircle } from "lucide-react";
 import Image from "next/image";
 
+import { useApp } from "../context/AppContext";
+
 interface HeaderProps {
-  cartCount: number;
-  wishlistCount: number;
-  postalCode: string;
-  setPostalCode: (code: string) => void;
-  openWishlistModal: () => void;
+  cartCount?: number;
+  wishlistCount?: number;
+  postalCode?: string;
+  setPostalCode?: (code: string) => void;
+  openWishlistModal?: () => void;
 }
 
-export default function Header({
-  cartCount,
-  wishlistCount,
-  postalCode,
-  setPostalCode,
-  openWishlistModal,
-}: HeaderProps) {
+export default function Header(props: HeaderProps) {
+  const context = useApp();
+
+  // Use passed props, otherwise fall back to context values
+  const cartCount = props.cartCount !== undefined ? props.cartCount : context.cartCount;
+  const wishlistCount = props.wishlistCount !== undefined ? props.wishlistCount : context.wishlistIds.length;
+  const postalCode = props.postalCode !== undefined ? props.postalCode : context.postalCode;
+  const setPostalCode = props.setPostalCode || context.setPostalCode;
+  const openWishlistModal = props.openWishlistModal || (() => context.setShowWishlistModal(true));
   const [showPincodeModal, setShowPincodeModal] = useState(false);
   const [tempPincode, setTempPincode] = useState(postalCode);
   const [showSearchOverlay, setShowSearchOverlay] = useState(false);
@@ -105,12 +109,13 @@ export default function Header({
           </div>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex gap-6 lg:gap-8 font-semibold text-[#111111] text-[13px] lg:text-[14px]">
-            <a href="#tvs" className="hover:text-brand-red transition-colors py-2 border-b-2 border-transparent hover:border-brand-red">TV & Audio</a>
-            <a href="#appliances" className="hover:text-brand-red transition-colors py-2 border-b-2 border-transparent hover:border-brand-red">Home Appliances</a>
-            <a href="#ac" className="hover:text-brand-red transition-colors py-2 border-b-2 border-transparent hover:border-brand-red">Air Conditioners</a>
-            <a href="#monitors" className="hover:text-brand-red transition-colors py-2 border-b-2 border-transparent hover:border-brand-red">Monitors & Laptops</a>
-            <a href="#thinq" className="hover:text-brand-red transition-colors py-2 border-b-2 border-transparent hover:border-brand-red text-brand-red">KEUKEN Connect™</a>
+          <nav className="hidden md:flex gap-5 lg:gap-6 font-semibold text-[#111111] text-[13px] lg:text-[14px]">
+            <a href="/" className="hover:text-brand-red transition-colors py-2 border-b-2 border-transparent hover:border-brand-red">Home</a>
+            <a href="/products" className="hover:text-brand-red transition-colors py-2 border-b-2 border-transparent hover:border-brand-red">Products</a>
+            <a href="/#tvs" className="hover:text-brand-red transition-colors py-2 border-b-2 border-transparent hover:border-brand-red">TV & Audio</a>
+            <a href="/#appliances" className="hover:text-brand-red transition-colors py-2 border-b-2 border-transparent hover:border-brand-red">Appliances</a>
+            <a href="/about" className="hover:text-brand-red transition-colors py-2 border-b-2 border-transparent hover:border-brand-red">About Us</a>
+            <a href="/contact" className="hover:text-brand-red transition-colors py-2 border-b-2 border-transparent hover:border-brand-red">Contact</a>
           </nav>
 
           {/* Right Controls */}
@@ -184,16 +189,17 @@ export default function Header({
 
         {/* Mobile Navigation Drawer */}
         {isMobileMenuOpen && (
-          <div className="md:hidden absolute top-16 sm:top-20 left-0 w-full bg-white border-b border-gray-200 shadow-lg py-4 px-6 flex flex-col gap-4 z-50 animate-slide-up">
-            <a href="#tvs" onClick={() => setIsMobileMenuOpen(false)} className="font-bold text-lg hover:text-brand-red py-1">TV & Audio</a>
-            <a href="#appliances" onClick={() => setIsMobileMenuOpen(false)} className="font-bold text-lg hover:text-brand-red py-1">Home Appliances</a>
-            <a href="#ac" onClick={() => setIsMobileMenuOpen(false)} className="font-bold text-lg hover:text-brand-red py-1">Air Conditioners</a>
-            <a href="#monitors" onClick={() => setIsMobileMenuOpen(false)} className="font-bold text-lg hover:text-brand-red py-1">Monitors & Laptops</a>
-            <a href="#thinq" onClick={() => setIsMobileMenuOpen(false)} className="font-bold text-brand-red py-1">KEUKEN Connect™ Smart Home</a>
+          <div className="md:hidden absolute top-16 sm:top-20 left-0 w-full bg-white border-b border-gray-200 shadow-lg py-4 px-6 flex flex-col gap-4 z-50 animate-slide-up text-[#111111]">
+            <a href="/" onClick={() => setIsMobileMenuOpen(false)} className="font-bold text-lg hover:text-brand-red py-1">Home</a>
+            <a href="/products" onClick={() => setIsMobileMenuOpen(false)} className="font-bold text-lg hover:text-brand-red py-1">Our Products</a>
+            <a href="/#tvs" onClick={() => setIsMobileMenuOpen(false)} className="font-bold text-lg hover:text-brand-red py-1">TV & Audio</a>
+            <a href="/#appliances" onClick={() => setIsMobileMenuOpen(false)} className="font-bold text-lg hover:text-brand-red py-1">Home Appliances</a>
+            <a href="/about" onClick={() => setIsMobileMenuOpen(false)} className="font-bold text-lg hover:text-brand-red py-1">About Us</a>
+            <a href="/contact" onClick={() => setIsMobileMenuOpen(false)} className="font-bold text-lg hover:text-brand-red py-1">Contact Us</a>
             <div className="h-px bg-gray-200 my-2"></div>
             <div className="flex justify-between text-sm text-gray-500 font-medium pb-2">
-              <a href="#support">Customer Support</a>
-              <a href="#find-store">Find Store</a>
+              <a href="/admin" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-brand-red">Admin Panel</a>
+              <a href="/#enquire" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-brand-red">Enquire Now</a>
             </div>
           </div>
         )}

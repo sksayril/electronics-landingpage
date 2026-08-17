@@ -17,9 +17,9 @@ export default function AmbientMusic() {
     const ctx = new AudioContextClass();
     audioCtxRef.current = ctx;
     
-    // Main volume gain node (set to very soft volume)
+    // Main volume gain node (set to slightly higher volume for richer sound)
     const masterGain = ctx.createGain();
-    masterGain.gain.setValueAtTime(0.04, ctx.currentTime); // 4% volume
+    masterGain.gain.setValueAtTime(0.15, ctx.currentTime); // 15% volume
     masterGain.connect(ctx.destination);
     
     // Ambient Pad synth voice
