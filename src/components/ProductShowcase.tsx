@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Star, Heart, ShoppingCart, Info, Award, HelpCircle } from "lucide-react";
 import Image from "next/image";
 import { useApp } from "../context/AppContext";
@@ -17,6 +17,7 @@ interface Product {
   mrp: number;
   price: number;
   badge?: string;
+  tab?: "trending" | "new" | "bestseller";
 }
 
 interface ProductShowcaseProps {
@@ -33,123 +34,59 @@ export default function ProductShowcase({
   postalCode,
 }: ProductShowcaseProps) {
   const [activeTab, setActiveTab] = useState<"trending" | "new" | "bestseller">("trending");
-
-  const products: Record<"trending" | "new" | "bestseller", Product[]> = {
-    trending: [
-      {
-        id: "tv-oled-55",
-        category: "tvs",
-        name: "KEUKEN OLED evo AI C4 55\" Smart TV",
-        model: "OLED55C4PSA",
-        image: "https://images.unsplash.com/photo-1593305841991-05c297ba4575?auto=format&fit=crop&w=400&q=80",
-        rating: 4.9,
-        reviews: 248,
-        features: ["α9 AI Processor Gen7", "Pixel Dimming OLED", "Brightness Booster Max", "144Hz VRR Gaming"],
-        mrp: 189990,
-        price: 139990,
-        badge: "HOT DEAL",
-      },
-      {
-        id: "fridge-instaview",
-        category: "appliances",
-        name: "InstaView® French Door Refrigerator",
-        model: "GR-X29FMBIL",
-        image: "https://images.unsplash.com/photo-1571175432247-f404af3a0ca5?auto=format&fit=crop&w=400&q=80",
-        rating: 4.8,
-        reviews: 112,
-        features: ["Knock Twice to See Inside", "UVnano™ Water Dispenser", "Dual Craft Ice Maker", "KEUKEN Connect™ Wifi"],
-        mrp: 249990,
-        price: 194990,
-        badge: "PREMIUM",
-      },
-      {
-        id: "washer-ai",
-        category: "appliances",
-        name: "AI Direct Drive™ 9kg Front Load Washer",
-        model: "FHP1209Z5M",
-        image: "https://images.unsplash.com/photo-1626806787461-102c1bfaaea1?auto=format&fit=crop&w=400&q=80",
-        rating: 4.7,
-        reviews: 319,
-        features: ["AI DD™ Fabric Sensor", "TurboWash™ 39 Mins", "Steam™ Allergen Removal", "6 Motion Technology"],
-        mrp: 58990,
-        price: 43990,
-        badge: "AI SMART",
-      },
-      {
-        id: "monitor-ultragear-34",
-        category: "monitors",
-        name: "UltraGear™ 34\" Curved OLED Gaming Monitor",
-        model: "34GS95QE",
-        image: "https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?auto=format&fit=crop&w=400&q=80",
-        rating: 4.9,
-        reviews: 86,
-        features: ["0.03ms Response Time", "240Hz Refresh Rate", "VESA DisplayHDR 400", "AMD FreeSync Premium"],
-        mrp: 99990,
-        price: 79990,
-        badge: "GAMING EXCLUSIVE",
-      },
-    ],
-    new: [
-      {
-        id: "ac-dualcool-1.5",
-        category: "ac",
-        name: "DUALCOOL Inverter 1.5 Ton 5-Star AC",
-        model: "TS-Q19YNZE",
-        image: "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=400&q=80",
-        rating: 4.6,
-        reviews: 43,
-        features: ["AI Convertible 6-in-1 Cooling", "PM 1.0 Smart Air Filter", "Ocean Black Anti-Corrosive", "ADC Safety Sensors"],
-        mrp: 72990,
-        price: 47990,
-        badge: "2026 MODEL",
-      },
-      {
-        id: "laptop-gram-16",
-        category: "monitors",
-        name: "KEUKEN Gram 16\" Intel Core Ultra 7 Laptop",
-        model: "16Z90S-G.AH78A2",
-        image: "https://images.unsplash.com/photo-1496181130204-755241544e35?auto=format&fit=crop&w=400&q=80",
-        rating: 4.8,
-        reviews: 31,
-        features: ["Intel® Core™ Ultra 7 Evo", "1.19kg Super Lightweight", "16:10 WQXGA IPS Display", "77Wh Battery Capacity"],
-        mrp: 142990,
-        price: 119990,
-        badge: "NEW",
-      },
-    ],
-    bestseller: [
-      {
-        id: "tv-uhd-43",
-        category: "tvs",
-        name: "KEUKEN UHD 4K 43\" Smart WebOS TV",
-        model: "43UR7500PSC",
-        image: "https://images.unsplash.com/photo-1593784991095-a205069470b6?auto=format&fit=crop&w=400&q=80",
-        rating: 4.7,
-        reviews: 1485,
-        features: ["α5 AI Processor 4K Gen6", "webOS 23 Smart Platform", "HDR10 Pro Detail Enhancement", "Game Optimizer Module"],
-        mrp: 49990,
-        price: 32990,
-        badge: "BESTSELLER",
-      },
-      {
-        id: "dishwasher-steam",
-        category: "appliances",
-        name: "TrueSteam™ 14 Place Settings Dishwasher",
-        model: "DFB424FP",
-        image: "https://images.unsplash.com/photo-1585515320310-259814833e62?auto=format&fit=crop&w=400&q=80",
-        rating: 4.8,
-        reviews: 955,
-        features: ["TrueSteam™ High Temp Sanitizing", "QuadWash™ Multi-Directional Blades", "EasyRack™ Plus Adjustable Rack", "Inverter Direct Drive Motor"],
-        mrp: 64990,
-        price: 52990,
-        badge: "99% SANITIZED",
-      },
-    ],
-  };
-
+  const [dbProducts, setDbProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(true);
   const { triggerEnquiry } = useApp();
   const [enquiredProducts, setEnquiredProducts] = useState<string[]>([]);
-  const currentProducts = products[activeTab];
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await fetch("/api/products");
+        const data = await response.json();
+        if (data.success) {
+          const mapped: Product[] = data.data.map((p: any) => ({
+            id: p._id || p.id,
+            category: p.category,
+            name: p.name,
+            model: p.model,
+            image: p.image,
+            rating: p.rating || 5,
+            reviews: p.reviews || 0,
+            features: p.features || [],
+            mrp: p.mrp,
+            price: p.price,
+            badge: p.badge,
+          }));
+          setDbProducts(mapped.filter((p: any) => p.tab === undefined || ["trending", "new", "bestseller"].includes(data.data.find((item: any) => item._id === p.id)?.tab)));
+          
+          // Re-map with tab configuration from response
+          const fullMapped = data.data.map((p: any) => ({
+            id: p._id || p.id,
+            category: p.category,
+            name: p.name,
+            model: p.model,
+            image: p.image,
+            rating: p.rating || 5,
+            reviews: p.reviews || 0,
+            features: p.features || [],
+            mrp: p.mrp,
+            price: p.price,
+            badge: p.badge,
+            tab: p.tab || "trending",
+          }));
+          setDbProducts(fullMapped);
+        }
+      } catch (err) {
+        console.error("Error fetching products in showcase:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchProducts();
+  }, []);
+
+  const currentProducts = dbProducts.filter((p) => p.tab === activeTab);
 
   const formatPrice = (value: number) => {
     return new Intl.NumberFormat("en-IN", {
@@ -213,9 +150,26 @@ export default function ProductShowcase({
 
         {/* Products Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {currentProducts.map((prod) => {
-            const isWishlisted = wishlistIds.includes(prod.id);
-            const discountPercent = Math.round(((prod.mrp - prod.price) / prod.mrp) * 100);
+          {loading ? (
+            [...Array(4)].map((_, idx) => (
+              <div key={idx} className="bg-white rounded-2xl border border-gray-200 overflow-hidden shadow-xs p-5 space-y-4 animate-pulse">
+                <div className="bg-gray-150 h-48 rounded-xl w-full"></div>
+                <div className="space-y-2">
+                  <div className="bg-gray-150 h-4 rounded-md w-1/3"></div>
+                  <div className="bg-gray-150 h-5 rounded-md w-3/4"></div>
+                  <div className="bg-gray-150 h-4 rounded-md w-1/2"></div>
+                </div>
+                <div className="bg-gray-150 h-10 rounded-lg w-full mt-4"></div>
+              </div>
+            ))
+          ) : currentProducts.length === 0 ? (
+            <div className="col-span-full py-16 text-center text-gray-500 font-medium bg-white rounded-2xl border border-gray-200">
+              No products found in this category.
+            </div>
+          ) : (
+            currentProducts.map((prod) => {
+              const isWishlisted = wishlistIds.includes(prod.id);
+              const discountPercent = Math.round(((prod.mrp - prod.price) / prod.mrp) * 100);
 
             return (
               <div
@@ -330,7 +284,7 @@ export default function ProductShowcase({
                         }}
                         className="flex-1 py-2 px-3 bg-brand-red hover:bg-brand-red-hover text-white text-xs font-bold rounded-lg transition-colors cursor-pointer hover:scale-102 transform duration-200 text-center"
                       >
-                        {enquiredProducts.includes(prod.id) ? "Enquire Now" : "Buy Now"}
+                        {enquiredProducts.includes(prod.id) ? "Enquire Now" : "Order Now"}
                       </button>
                       <button
                         onClick={() => addToCart(prod.name)}
@@ -345,7 +299,7 @@ export default function ProductShowcase({
                 </div>
               </div>
             );
-          })}
+          }))}
         </div>
 
       </div>

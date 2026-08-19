@@ -29,6 +29,55 @@ export default function Header(props: HeaderProps) {
   const [searchQuery, setSearchQuery] = useState("");
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
+  // Become a Partner state
+  const [showPartnerModal, setShowPartnerModal] = useState(false);
+  const [partnerName, setPartnerName] = useState("");
+  const [partnerEmail, setPartnerEmail] = useState("");
+  const [partnerMobile, setPartnerMobile] = useState("");
+  const [partnerLocation, setPartnerLocation] = useState("");
+  const [partnerRequirement, setPartnerRequirement] = useState("");
+  const [submittingPartner, setSubmittingPartner] = useState(false);
+
+  const handlePartnerSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!partnerName || !partnerEmail || !partnerMobile || !partnerLocation || !partnerRequirement) {
+      alert("Please fill in all fields.");
+      return;
+    }
+
+    setSubmittingPartner(true);
+    try {
+      const response = await fetch("/api/partner", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: partnerName,
+          email: partnerEmail,
+          mobile: partnerMobile,
+          location: partnerLocation,
+          message: partnerRequirement,
+        }),
+      });
+
+      const data = await response.json();
+      if (!response.ok) {
+        throw new Error(data.error || "Failed to submit partner request");
+      }
+
+      alert("Thank you! Your partnership request has been submitted successfully.");
+      setShowPartnerModal(false);
+      setPartnerName("");
+      setPartnerEmail("");
+      setPartnerMobile("");
+      setPartnerLocation("");
+      setPartnerRequirement("");
+    } catch (err: any) {
+      alert(err.message || "Failed to submit request");
+    } finally {
+      setSubmittingPartner(false);
+    }
+  };
+
   const handlePincodeSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (/^\d{6}$/.test(tempPincode)) {
@@ -109,13 +158,23 @@ export default function Header(props: HeaderProps) {
           </div>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex gap-5 lg:gap-6 font-semibold text-[#111111] text-[13px] lg:text-[14px]">
+          <nav className="hidden md:flex gap-5 lg:gap-6 font-semibold text-[#111111] text-[13px] lg:text-[14px] items-center">
             <a href="/" className="hover:text-brand-red transition-colors py-2 border-b-2 border-transparent hover:border-brand-red">Home</a>
             <a href="/products" className="hover:text-brand-red transition-colors py-2 border-b-2 border-transparent hover:border-brand-red">Products</a>
             <a href="/#tvs" className="hover:text-brand-red transition-colors py-2 border-b-2 border-transparent hover:border-brand-red">TV & Audio</a>
             <a href="/#appliances" className="hover:text-brand-red transition-colors py-2 border-b-2 border-transparent hover:border-brand-red">Appliances</a>
             <a href="/about" className="hover:text-brand-red transition-colors py-2 border-b-2 border-transparent hover:border-brand-red">About Us</a>
             <a href="/contact" className="hover:text-brand-red transition-colors py-2 border-b-2 border-transparent hover:border-brand-red">Contact</a>
+            <a 
+              href="#partner"
+              onClick={(e) => {
+                e.preventDefault();
+                setShowPartnerModal(true);
+              }} 
+              className="bg-brand-red text-white hover:bg-brand-red-hover px-4.5 py-2.5 rounded-full text-[10px] sm:text-[11px] font-bold uppercase tracking-wider transition-all duration-200 shadow-sm hover:shadow-md hover:scale-102 transform text-center whitespace-nowrap"
+            >
+              Become a Partner
+            </a>
           </nav>
 
           {/* Right Controls */}
@@ -196,6 +255,15 @@ export default function Header(props: HeaderProps) {
             <a href="/#appliances" onClick={() => setIsMobileMenuOpen(false)} className="font-bold text-lg hover:text-brand-red py-1">Home Appliances</a>
             <a href="/about" onClick={() => setIsMobileMenuOpen(false)} className="font-bold text-lg hover:text-brand-red py-1">About Us</a>
             <a href="/contact" onClick={() => setIsMobileMenuOpen(false)} className="font-bold text-lg hover:text-brand-red py-1">Contact Us</a>
+            <button 
+              onClick={() => {
+                setIsMobileMenuOpen(false);
+                setShowPartnerModal(true);
+              }} 
+              className="font-bold text-lg text-left hover:text-brand-red py-1 cursor-pointer"
+            >
+              Become a Partner
+            </button>
             <div className="h-px bg-gray-200 my-2"></div>
             <div className="flex justify-between text-sm text-gray-500 font-medium pb-2">
               <a href="/admin" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-brand-red">Admin Panel</a>
@@ -302,6 +370,106 @@ export default function Header(props: HeaderProps) {
           </div>
           {/* Click outside to close */}
           <div className="h-full w-full" onClick={() => setShowSearchOverlay(false)}></div>
+        </div>
+      )}
+
+      {/* Become a Partner Modal */}
+      {showPartnerModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs animate-fade-in">
+          <div className="bg-white rounded-2xl max-w-lg w-full shadow-2xl overflow-hidden border border-gray-150 animate-slide-up flex flex-col max-h-[90vh]">
+            <div className="bg-[#202020] text-white px-6 py-5 flex justify-between items-center shrink-0">
+              <div>
+                <h3 className="font-bold text-lg uppercase tracking-wide">Become a Partner</h3>
+                <p className="text-[10px] text-gray-400 mt-0.5 uppercase tracking-wider">Collaborate with KEUKEN Premium Solutions</p>
+              </div>
+              <button 
+                onClick={() => setShowPartnerModal(false)}
+                className="p-1.5 hover:bg-white/10 rounded-full transition-colors cursor-pointer"
+              >
+                <X className="h-5 w-5" />
+              </button>
+            </div>
+            
+            <form onSubmit={handlePartnerSubmit} className="p-6 space-y-4 overflow-y-auto">
+              <div className="space-y-1">
+                <label className="text-[11px] uppercase tracking-wider text-gray-500 font-bold block">
+                  Full Name
+                </label>
+                <input
+                  type="text"
+                  required
+                  placeholder="e.g. John Doe"
+                  value={partnerName}
+                  onChange={(e) => setPartnerName(e.target.value)}
+                  className="w-full h-11 px-4 border border-gray-300 rounded-xl focus:outline-none focus:border-brand-red text-sm text-[#111111]"
+                />
+              </div>
+
+              <div className="space-y-1">
+                <label className="text-[11px] uppercase tracking-wider text-gray-500 font-bold block">
+                  Email Address
+                </label>
+                <input
+                  type="email"
+                  required
+                  placeholder="e.g. john@example.com"
+                  value={partnerEmail}
+                  onChange={(e) => setPartnerEmail(e.target.value)}
+                  className="w-full h-11 px-4 border border-gray-300 rounded-xl focus:outline-none focus:border-brand-red text-sm text-[#111111]"
+                />
+              </div>
+
+              <div className="space-y-1">
+                <label className="text-[11px] uppercase tracking-wider text-gray-500 font-bold block">
+                  Mobile Number
+                </label>
+                <input
+                  type="tel"
+                  required
+                  placeholder="e.g. +91 98765 43210"
+                  value={partnerMobile}
+                  onChange={(e) => setPartnerMobile(e.target.value)}
+                  className="w-full h-11 px-4 border border-gray-300 rounded-xl focus:outline-none focus:border-brand-red text-sm text-[#111111]"
+                />
+              </div>
+
+              <div className="space-y-1">
+                <label className="text-[11px] uppercase tracking-wider text-gray-500 font-bold block">
+                  Business Location
+                </label>
+                <input
+                  type="text"
+                  required
+                  placeholder="e.g. New Delhi, India"
+                  value={partnerLocation}
+                  onChange={(e) => setPartnerLocation(e.target.value)}
+                  className="w-full h-11 px-4 border border-gray-300 rounded-xl focus:outline-none focus:border-brand-red text-sm text-[#111111]"
+                />
+              </div>
+
+              <div className="space-y-1">
+                <label className="text-[11px] uppercase tracking-wider text-gray-500 font-bold block">
+                  Partnership Requirements
+                </label>
+                <textarea
+                  required
+                  rows={3}
+                  placeholder="Please describe your requirements, business details, or partnership proposals..."
+                  value={partnerRequirement}
+                  onChange={(e) => setPartnerRequirement(e.target.value)}
+                  className="w-full p-4 border border-gray-300 rounded-xl focus:outline-none focus:border-brand-red text-sm text-[#111111] resize-none"
+                />
+              </div>
+
+              <button
+                type="submit"
+                disabled={submittingPartner}
+                className="w-full h-12 bg-brand-red hover:bg-brand-red-hover disabled:bg-gray-300 text-white font-bold rounded-xl transition-colors cursor-pointer uppercase tracking-wider text-xs shadow-md"
+              >
+                {submittingPartner ? "Submitting Application..." : "Submit Application"}
+              </button>
+            </form>
+          </div>
         </div>
       )}
     </>

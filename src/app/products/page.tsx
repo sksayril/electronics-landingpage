@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import { useApp } from "../../context/AppContext";
@@ -19,106 +19,54 @@ interface Product {
   rating: number;
 }
 
-const PRODUCTS_DATA: Product[] = [
-  {
-    id: "tv-oled-55",
-    name: "KEUKEN OLED evo AI C4 55\" Smart TV",
-    category: "tv",
-    price: 139990,
-    mrp: 189990,
-    image: "https://images.unsplash.com/photo-1593305841991-05c297ba4575?auto=format&fit=crop&w=600&q=80",
-    tag: "Trending",
-    rating: 4.9,
-    features: ["α9 AI Processor Gen7", "Brightness Booster Max", "144Hz Refresh Rate", "webOS 26 Smart Platform"],
-  },
-  {
-    id: "fridge-instaview",
-    name: "InstaView® French Door Refrigerator",
-    category: "appliance",
-    price: 194990,
-    mrp: 249990,
-    image: "https://images.unsplash.com/photo-1571175432247-f404af3a0ca5?auto=format&fit=crop&w=600&q=80",
-    tag: "Premium Choice",
-    rating: 4.8,
-    features: ["Knock Twice & See Inside", "Linear Cooling™", "Craft Ice™ Maker", "ThinQ IoT WiFi Control"],
-  },
-  {
-    id: "washer-ai",
-    name: "AI Direct Drive™ 9kg Front Load Washer",
-    category: "appliance",
-    price: 43990,
-    mrp: 59990,
-    image: "https://images.unsplash.com/photo-1626806787461-102c1bfaaea1?auto=format&fit=crop&w=600&q=80",
-    tag: "Best Seller",
-    rating: 4.7,
-    features: ["AI DD™ Fabric Protection", "TurboWash™ 360", "Steam+™ Allergen Care", "6 Motion Direct Drive"],
-  },
-  {
-    id: "monitor-ultragear-34",
-    name: "UltraGear™ 34\" Curved OLED Gaming Monitor",
-    category: "laptop",
-    price: 79990,
-    mrp: 99990,
-    image: "https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?auto=format&fit=crop&w=600&q=80",
-    tag: "Pro Gaming",
-    rating: 4.9,
-    features: ["240Hz Refresh Rate", "0.03ms GtG Response Time", "VESA DisplayHDR True Black 400", "800R Curved Screen"],
-  },
-  {
-    id: "ac-dualcool-1.5",
-    name: "DUALCOOL Inverter 1.5 Ton 5-Star AC",
-    category: "ac",
-    price: 47990,
-    mrp: 65990,
-    image: "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=600&q=80",
-    tag: "Energy Efficient",
-    rating: 4.6,
-    features: ["AI Convertible 6-in-1 Cooling", "Super Convertible modes", "Gold Fin™ Anti-Corrosive Condenser", "Vanguard Filtration"],
-  },
-  {
-    id: "laptop-gram-16",
-    name: "KEUKEN Gram 16\" Intel Core Ultra 7 Laptop",
-    category: "laptop",
-    price: 119990,
-    mrp: 149990,
-    image: "https://images.unsplash.com/photo-1496181130204-755241544e35?auto=format&fit=crop&w=600&q=80",
-    tag: "Ultra Light",
-    rating: 4.8,
-    features: ["1.19kg Lightweight Body", "Intel Core Ultra 7 CPU", "WQXGA IPS Display", "77Wh High Capacity Battery"],
-  },
-  {
-    id: "tv-uhd-43",
-    name: "KEUKEN UHD 4K 43\" Smart WebOS TV",
-    category: "tv",
-    price: 32990,
-    mrp: 45990,
-    image: "https://images.unsplash.com/photo-1593784991095-a205069470b6?auto=format&fit=crop&w=600&q=80",
-    rating: 4.5,
-    features: ["α5 AI Processor 4K Gen6", "webOS 23 Smart Platform", "HDR10 Pro", "Game Optimizer Mode"],
-  },
-  {
-    id: "dishwasher-steam",
-    name: "TrueSteam™ 14 Place Settings Dishwasher",
-    category: "appliance",
-    price: 52990,
-    mrp: 69990,
-    image: "https://images.unsplash.com/photo-1585515320310-259814833e62?auto=format&fit=crop&w=600&q=80",
-    tag: "New Launch",
-    rating: 4.7,
-    features: ["TrueSteam™ sanitizing cycles", "QuadWash™ Multi-Motion spray arms", "EasyRack™ Plus flexible tines", "Inverter Direct Drive Motor"],
-  },
-];
-
 export default function ProductsPage() {
   const { addToCart, wishlistIds, toggleWishlist, triggerEnquiry } = useApp();
+  const [productsData, setProductsData] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(true);
   const [enquiredProducts, setEnquiredProducts] = useState<string[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<"all" | "tv" | "appliance" | "ac" | "laptop">("all");
   const [searchQuery, setSearchQuery] = useState("");
   const [sortBy, setSortBy] = useState<"price-low" | "price-high" | "rating">("rating");
 
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await fetch("/api/products");
+        const data = await response.json();
+        if (data.success) {
+          const mapped: Product[] = data.data.map((p: any) => {
+            // Map DB category to catalog categories
+            let cat: "tv" | "appliance" | "ac" | "laptop" = "tv";
+            if (p.category === "appliances") cat = "appliance";
+            else if (p.category === "ac") cat = "ac";
+            else if (p.category === "monitors") cat = "laptop";
+
+            return {
+              id: p._id || p.id,
+              name: p.name,
+              category: cat,
+              price: p.price,
+              mrp: p.mrp,
+              image: p.image,
+              tag: p.badge || "",
+              features: p.features || [],
+              rating: p.rating || 5,
+            };
+          });
+          setProductsData(mapped);
+        }
+      } catch (err) {
+        console.error("Error fetching catalog products:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchProducts();
+  }, []);
+
   // Filtering and sorting logic
   const filteredProducts = useMemo(() => {
-    return PRODUCTS_DATA.filter((product) => {
+    return productsData.filter((product) => {
       const matchCategory = selectedCategory === "all" || product.category === selectedCategory;
       const matchSearch = product.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
                           product.features.some(f => f.toLowerCase().includes(searchQuery.toLowerCase()));
@@ -128,7 +76,7 @@ export default function ProductsPage() {
       if (sortBy === "price-high") return b.price - a.price;
       return b.rating - a.rating; // Default rating sort
     });
-  }, [selectedCategory, searchQuery, sortBy]);
+  }, [productsData, selectedCategory, searchQuery, sortBy]);
 
   const formatPrice = (value: number) => {
     return new Intl.NumberFormat("en-IN", {
@@ -207,7 +155,21 @@ export default function ProductsPage() {
         </div>
 
         {/* Product Grid */}
-        {filteredProducts.length === 0 ? (
+        {loading ? (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+            {[...Array(8)].map((_, idx) => (
+              <div key={idx} className="bg-white rounded-3xl border border-gray-200 p-5 space-y-4 animate-pulse">
+                <div className="bg-gray-150 aspect-square rounded-2xl w-full"></div>
+                <div className="space-y-2">
+                  <div className="bg-gray-150 h-4 rounded-md w-1/3"></div>
+                  <div className="bg-gray-150 h-5 rounded-md w-3/4"></div>
+                  <div className="bg-gray-150 h-4 rounded-md w-1/2"></div>
+                </div>
+                <div className="bg-gray-150 h-10 rounded-xl w-full mt-4"></div>
+              </div>
+            ))}
+          </div>
+        ) : filteredProducts.length === 0 ? (
           <div className="text-center py-20 bg-gray-50 rounded-3xl border border-gray-150 space-y-4">
             <p className="text-sm font-semibold text-gray-500">No products found matching your criteria.</p>
             <p className="text-xs text-gray-400 font-light">Try modifying your search or select a different category.</p>
@@ -290,7 +252,7 @@ export default function ProductsPage() {
                           }}
                           className="flex-grow py-2.5 bg-brand-red hover:bg-brand-red-hover text-white text-xs font-bold rounded-xl transition-colors cursor-pointer hover:scale-102 transform duration-200 text-center"
                         >
-                          {enquiredProducts.includes(prod.id) ? "Enquire Now" : "Buy Now"}
+                          {enquiredProducts.includes(prod.id) ? "Enquire Now" : "Order Now"}
                         </button>
                         <button
                           onClick={() => addToCart(prod.name)}

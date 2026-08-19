@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { useApp } from "../context/AppContext";
 import Header from "../components/Header";
 import HeroCarousel from "../components/HeroCarousel";
@@ -35,57 +36,33 @@ export default function Home() {
     cartNotification,
   } = useApp();
 
-  // Database map for liked items in modal
-  const allProducts: Record<string, WishlistItem> = {
-    "tv-oled-55": {
-      id: "tv-oled-55",
-      name: "KEUKEN OLED evo AI C4 55\" Smart TV",
-      price: 139990,
-      image: "https://images.unsplash.com/photo-1593305841991-05c297ba4575?auto=format&fit=crop&w=150&q=80",
-    },
-    "fridge-instaview": {
-      id: "fridge-instaview",
-      name: "InstaView® French Door Refrigerator",
-      price: 194990,
-      image: "https://images.unsplash.com/photo-1571175432247-f404af3a0ca5?auto=format&fit=crop&w=150&q=80",
-    },
-    "washer-ai": {
-      id: "washer-ai",
-      name: "AI Direct Drive™ 9kg Front Load Washer",
-      price: 43990,
-      image: "https://images.unsplash.com/photo-1626806787461-102c1bfaaea1?auto=format&fit=crop&w=150&q=80",
-    },
-    "monitor-ultragear-34": {
-      id: "monitor-ultragear-34",
-      name: "UltraGear™ 34\" Curved OLED Gaming Monitor",
-      price: 79990,
-      image: "https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?auto=format&fit=crop&w=150&q=80",
-    },
-    "ac-dualcool-1.5": {
-      id: "ac-dualcool-1.5",
-      name: "DUALCOOL Inverter 1.5 Ton 5-Star AC",
-      price: 47990,
-      image: "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=150&q=80",
-    },
-    "laptop-gram-16": {
-      id: "laptop-gram-16",
-      name: "KEUKEN Gram 16\" Intel Core Ultra 7 Laptop",
-      price: 119990,
-      image: "https://images.unsplash.com/photo-1496181130204-755241544e35?auto=format&fit=crop&w=150&q=80",
-    },
-    "tv-uhd-43": {
-      id: "tv-uhd-43",
-      name: "KEUKEN UHD 4K 43\" Smart WebOS TV",
-      price: 32990,
-      image: "https://images.unsplash.com/photo-1593784991095-a205069470b6?auto=format&fit=crop&w=150&q=80",
-    },
-    "dishwasher-steam": {
-      id: "dishwasher-steam",
-      name: "TrueSteam™ 14 Place Settings Dishwasher",
-      price: 52990,
-      image: "https://images.unsplash.com/photo-1585515320310-259814833e62?auto=format&fit=crop&w=150&q=80",
-    },
-  };
+  const [allProducts, setAllProducts] = useState<Record<string, WishlistItem>>({});
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await fetch("/api/products");
+        const data = await response.json();
+        if (data.success) {
+          const map: Record<string, WishlistItem> = {};
+          data.data.forEach((p: any) => {
+            const id = p._id || p.id;
+            map[id] = {
+              id: id,
+              name: p.name,
+              price: p.price,
+              image: p.image,
+            };
+          });
+          setAllProducts(map);
+        }
+      } catch (err) {
+        console.error("Error fetching homepage products:", err);
+      }
+    };
+    fetchProducts();
+  }, []);
+
 
   const formatPrice = (value: number) => {
     return new Intl.NumberFormat("en-IN", {
