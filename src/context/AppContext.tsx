@@ -25,7 +25,7 @@ const AppContext = createContext<AppContextType | undefined>(undefined);
 export function AppProvider({ children }: { children: React.ReactNode }) {
   const [cartCount, setCartCount] = useState(0);
   const [wishlistIds, setWishlistIds] = useState<string[]>([]);
-  const [postalCode, setPostalCode] = useState("110001");
+  const [postalCode, setPostalCode] = useState("700161");
   const [showWishlistModal, setShowWishlistModal] = useState(false);
   const [cartNotification, setCartNotification] = useState<string | null>(null);
   const [enquiryMessage, setEnquiryMessage] = useState("");

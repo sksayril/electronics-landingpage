@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Send, CheckCircle, AlertCircle, Phone, Mail, User, MessageSquare, Download, FileText } from "lucide-react";
+import { Send, CheckCircle, AlertCircle, Phone, Mail, User, MessageSquare, Download, FileText, MapPin, Globe } from "lucide-react";
 import { useApp } from "../context/AppContext";
 
 export default function EnquirySection() {
@@ -133,22 +133,47 @@ export default function EnquirySection() {
             </p>
 
             <div className="pt-6 border-t border-zinc-900 space-y-4">
-              <div className="flex items-center gap-3 text-sm text-gray-300">
-                <div className="h-9 w-9 rounded-full bg-zinc-900 flex items-center justify-center border border-zinc-800 shrink-0">
+              <div className="flex items-start gap-3 text-sm text-gray-300">
+                <div className="h-9 w-9 rounded-full bg-zinc-900 flex items-center justify-center border border-zinc-800 shrink-0 mt-0.5">
                   <Phone className="h-4 w-4 text-brand-red" />
                 </div>
                 <div>
-                  <p className="font-semibold">Toll-Free Customer Support</p>
-                  <p className="text-xs text-gray-450 font-light">1800-KEUKEN-CARE (1800-123-4567)</p>
+                  <p className="font-semibold">Contact Numbers</p>
+                  <p className="text-xs text-brand-red font-semibold mt-0.5">
+                    <a href="tel:03335386816" className="hover:underline">033 35386816</a> / <a href="tel:8240717312" className="hover:underline">8240717312</a>
+                  </p>
                 </div>
               </div>
-              <div className="flex items-center gap-3 text-sm text-gray-300">
-                <div className="h-9 w-9 rounded-full bg-zinc-900 flex items-center justify-center border border-zinc-800 shrink-0">
+
+              <div className="flex items-start gap-3 text-sm text-gray-300">
+                <div className="h-9 w-9 rounded-full bg-zinc-900 flex items-center justify-center border border-zinc-800 shrink-0 mt-0.5">
                   <Mail className="h-4 w-4 text-brand-red" />
                 </div>
                 <div>
                   <p className="font-semibold">Email Enquiries</p>
                   <a href="mailto:info@keuken.in" className="text-xs text-brand-red hover:underline font-light">info@keuken.in</a>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-3 text-sm text-gray-300">
+                <div className="h-9 w-9 rounded-full bg-zinc-900 flex items-center justify-center border border-zinc-800 shrink-0 mt-0.5">
+                  <MapPin className="h-4 w-4 text-brand-red" />
+                </div>
+                <div>
+                  <p className="font-semibold">Corporate Office</p>
+                  <p className="text-xs text-gray-400 font-light leading-relaxed">
+                    Unit-1111A, 11th Floor, PS Qube Building, Newtown, Kolkata-700161
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-3 text-sm text-gray-300">
+                <div className="h-9 w-9 rounded-full bg-zinc-900 flex items-center justify-center border border-zinc-800 shrink-0 mt-0.5">
+                  <Globe className="h-4 w-4 text-brand-red" />
+                </div>
+                <div>
+                  <p className="font-semibold">Official Website</p>
+                  <a href="https://www.keuken.in" target="_blank" rel="noopener noreferrer" className="text-xs text-brand-red hover:underline font-light">www.keuken.in</a>
                 </div>
               </div>
 

@@ -158,12 +158,22 @@ export default function Footer() {
         
         {/* Left Side */}
         <div className="flex flex-col gap-2 text-center md:text-left">
-          <p className="text-gray-400 text-xs flex items-center justify-center md:justify-start gap-2">
-            <span>© {new Date().getFullYear()} KEUKEN Electronics India. All rights reserved.</span>
+          <p className="text-gray-300 text-xs font-medium">
+            UNIT-1111A, 11th Floor, PS Qube Building, Newtown, Kolkata-700161
+          </p>
+          <p className="text-gray-400 text-xs flex flex-wrap items-center justify-center md:justify-start gap-3">
+            <span>📞 <a href="tel:03335386816" className="hover:underline">033 35386816</a> / <a href="tel:8240717312" className="hover:underline">8240717312</a></span>
             <span className="text-zinc-700">•</span>
             <a href="mailto:info@keuken.in" className="text-brand-red hover:underline flex items-center gap-1 font-semibold">
               <Mail className="h-3 w-3" /> info@keuken.in
             </a>
+            <span className="text-zinc-700">•</span>
+            <a href="https://www.keuken.in" target="_blank" rel="noopener noreferrer" className="text-gray-300 hover:text-white hover:underline font-semibold">
+              www.keuken.in
+            </a>
+          </p>
+          <p className="text-gray-500 text-xs pt-1">
+            © {new Date().getFullYear()} KEUKEN Electronics India. All rights reserved.
           </p>
           <p className="text-[10px] text-gray-600 max-w-md leading-relaxed font-light">
             Disclaimer: This application is a high-fidelity simulated landing page showcase demonstrating Next.js App Router and Tailwind CSS. All trademarks are the property of their respective owners.

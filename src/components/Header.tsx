@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Search, ShoppingBag, Heart, MapPin, User, Menu, X, ArrowRight, ShieldCheck, HelpCircle, Download, Mail } from "lucide-react";
+import { Search, ShoppingBag, Heart, MapPin, User, Menu, X, ArrowRight, ShieldCheck, HelpCircle, Download, Mail, Phone } from "lucide-react";
 import Image from "next/image";
 
 import { useApp } from "../context/AppContext";
@@ -113,12 +113,16 @@ export default function Header(props: HeaderProps) {
           <div className="flex gap-4 items-center">
             <span className="font-semibold text-brand-red">KEUKEN Connect™</span>
             <span className="h-3 w-px bg-gray-300"></span>
+            <a href="tel:03335386816" className="hover:text-black flex items-center gap-1 font-medium">
+              <Phone className="h-3 w-3 text-brand-red" /> 033 35386816
+            </a>
+            <span className="h-3 w-px bg-gray-300"></span>
             <a href="mailto:info@keuken.in" className="hover:text-black flex items-center gap-1 font-medium">
               <Mail className="h-3 w-3 text-brand-red" /> info@keuken.in
             </a>
             <span className="h-3 w-px bg-gray-300"></span>
             <a href="#find-store" className="hover:text-black flex items-center gap-1">
-              <MapPin className="h-3 w-3" /> Find a Store
+              <MapPin className="h-3 w-3" /> Kolkata (700161)
             </a>
           </div>
           <div className="flex gap-4 items-center">

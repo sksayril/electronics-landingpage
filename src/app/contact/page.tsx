@@ -4,7 +4,7 @@ import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import EnquirySection from "../../components/EnquirySection";
 import ScrollReveal from "../../components/ScrollReveal";
-import { Phone, Mail, MapPin, Clock, Download } from "lucide-react";
+import { Phone, Mail, MapPin, Globe, Download } from "lucide-react";
 
 export default function ContactPage() {
   return (
@@ -17,14 +17,14 @@ export default function ContactPage() {
         <section className="relative py-20 bg-zinc-950 text-white overflow-hidden text-center">
           <div className="absolute inset-0 bg-gradient-to-b from-brand-red/15 to-transparent pointer-events-none"></div>
           <div className="max-w-4xl mx-auto px-6 relative z-10 space-y-4">
-            <span className="px-3 py-1 bg-brand-red text-white text-[10px] font-bold rounded-full uppercase tracking-wider inline-block">
-              Get in touch
+            <span className="px-4 py-1.5 bg-brand-red text-white text-[10px] font-bold rounded-full uppercase tracking-widest inline-block">
+              INNOVATION | QUALITY | RELIABILITY
             </span>
             <h1 className="text-4xl sm:text-5xl font-extrabold uppercase tracking-tight">
-              Contact KEUKEN
+              Connect With Us
             </h1>
-            <p className="text-xs sm:text-sm text-gray-400 font-light max-w-lg mx-auto leading-relaxed">
-              Reach out to our customer care team, corporate headquarters, or download our official product catalogue. We're here to help.
+            <p className="text-sm sm:text-base text-gray-300 font-normal max-w-xl mx-auto leading-relaxed">
+              "Bringing smart technology and elegant design together to create better homes."
             </p>
           </div>
         </section>
@@ -33,66 +33,75 @@ export default function ContactPage() {
         <section className="py-16 bg-white">
           <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
             
-            {/* Call */}
+            {/* Call Support */}
             <ScrollReveal direction="up" delay={50}>
-              <div className="border border-gray-150 rounded-2xl p-6 hover:shadow-lg transition-all duration-300 space-y-3 h-full">
-                <div className="h-10 w-10 rounded-xl bg-brand-red/10 text-brand-red flex items-center justify-center">
-                  <Phone className="h-5 w-5" />
+              <div className="border border-gray-150 rounded-2xl p-6 hover:shadow-lg transition-all duration-300 space-y-3 h-full flex flex-col justify-between">
+                <div>
+                  <div className="h-10 w-10 rounded-xl bg-brand-red/10 text-brand-red flex items-center justify-center">
+                    <Phone className="h-5 w-5" />
+                  </div>
+                  <h3 className="text-sm font-bold uppercase tracking-wider text-gray-900 mt-3">Contact No</h3>
+                  <p className="text-[11px] text-gray-500 font-light leading-relaxed">
+                    Speak directly with our advisors & support team.
+                  </p>
                 </div>
-                <h3 className="text-sm font-bold uppercase tracking-wider text-gray-900">Call Support</h3>
-                <p className="text-[11px] text-gray-500 font-light leading-relaxed">
-                  Speak to our product advisors or support engineers.
-                </p>
-                <div className="text-xs font-bold text-brand-red pt-1">
-                  1800-123-4567 (Toll Free)
+                <div className="text-xs font-bold text-brand-red pt-2 space-y-0.5 border-t border-gray-100">
+                  <div><a href="tel:03335386816" className="hover:underline">033 35386816</a></div>
+                  <div><a href="tel:8240717312" className="hover:underline">8240717312</a></div>
                 </div>
               </div>
             </ScrollReveal>
 
-            {/* Email */}
+            {/* Email Us */}
             <ScrollReveal direction="up" delay={100}>
-              <div className="border border-gray-150 rounded-2xl p-6 hover:shadow-lg transition-all duration-300 space-y-3 h-full">
-                <div className="h-10 w-10 rounded-xl bg-brand-red/10 text-brand-red flex items-center justify-center">
-                  <Mail className="h-5 w-5" />
+              <div className="border border-gray-150 rounded-2xl p-6 hover:shadow-lg transition-all duration-300 space-y-3 h-full flex flex-col justify-between">
+                <div>
+                  <div className="h-10 w-10 rounded-xl bg-brand-red/10 text-brand-red flex items-center justify-center">
+                    <Mail className="h-5 w-5" />
+                  </div>
+                  <h3 className="text-sm font-bold uppercase tracking-wider text-gray-900 mt-3">Email Us</h3>
+                  <p className="text-[11px] text-gray-500 font-light leading-relaxed">
+                    Send us your product, warranty & corporate queries.
+                  </p>
                 </div>
-                <h3 className="text-sm font-bold uppercase tracking-wider text-gray-900">Email Us</h3>
-                <p className="text-[11px] text-gray-500 font-light leading-relaxed">
-                  Send us your warranty, business or general queries.
-                </p>
-                <div className="text-xs font-bold text-brand-red pt-1">
+                <div className="text-xs font-bold text-brand-red pt-2 border-t border-gray-100">
                   <a href="mailto:info@keuken.in" className="hover:underline">info@keuken.in</a>
                 </div>
               </div>
             </ScrollReveal>
 
-            {/* Address */}
+            {/* Corporate HQ */}
             <ScrollReveal direction="up" delay={150}>
-              <div className="border border-gray-150 rounded-2xl p-6 hover:shadow-lg transition-all duration-300 space-y-3 h-full">
-                <div className="h-10 w-10 rounded-xl bg-brand-red/10 text-brand-red flex items-center justify-center">
-                  <MapPin className="h-5 w-5" />
+              <div className="border border-gray-150 rounded-2xl p-6 hover:shadow-lg transition-all duration-300 space-y-3 h-full flex flex-col justify-between">
+                <div>
+                  <div className="h-10 w-10 rounded-xl bg-brand-red/10 text-brand-red flex items-center justify-center">
+                    <MapPin className="h-5 w-5" />
+                  </div>
+                  <h3 className="text-sm font-bold uppercase tracking-wider text-gray-900 mt-3">Corporate HQ</h3>
+                  <p className="text-[11px] text-gray-600 font-normal leading-relaxed">
+                    UNIT-1111A, 11TH FLOOR, PS QUBE BUILDING, NEWTOWN, KOLKATA-700161
+                  </p>
                 </div>
-                <h3 className="text-sm font-bold uppercase tracking-wider text-gray-900">Corporate HQ</h3>
-                <p className="text-[11px] text-gray-500 font-light leading-relaxed">
-                  KEUKEN Tower, Sector 62, Gurgaon, Haryana, India.
-                </p>
-                <div className="text-xs font-bold text-gray-700 pt-1">
-                  PIN: 122001
+                <div className="text-xs font-bold text-gray-900 pt-2 border-t border-gray-100">
+                  PIN: 700161
                 </div>
               </div>
             </ScrollReveal>
 
-            {/* Timings */}
+            {/* Web Portal */}
             <ScrollReveal direction="up" delay={200}>
-              <div className="border border-gray-150 rounded-2xl p-6 hover:shadow-lg transition-all duration-300 space-y-3 h-full">
-                <div className="h-10 w-10 rounded-xl bg-brand-red/10 text-brand-red flex items-center justify-center">
-                  <Clock className="h-5 w-5" />
+              <div className="border border-gray-150 rounded-2xl p-6 hover:shadow-lg transition-all duration-300 space-y-3 h-full flex flex-col justify-between">
+                <div>
+                  <div className="h-10 w-10 rounded-xl bg-brand-red/10 text-brand-red flex items-center justify-center">
+                    <Globe className="h-5 w-5" />
+                  </div>
+                  <h3 className="text-sm font-bold uppercase tracking-wider text-gray-900 mt-3">Official Web</h3>
+                  <p className="text-[11px] text-gray-500 font-light leading-relaxed">
+                    Visit our official portal for products & customer support.
+                  </p>
                 </div>
-                <h3 className="text-sm font-bold uppercase tracking-wider text-gray-900">Service Hours</h3>
-                <p className="text-[11px] text-gray-500 font-light leading-relaxed">
-                  Our service centers operate throughout the week.
-                </p>
-                <div className="text-xs font-bold text-gray-700 pt-1">
-                  Mon - Sun: 9:00 AM - 8:00 PM
+                <div className="text-xs font-bold text-brand-red pt-2 border-t border-gray-100">
+                  <a href="https://www.keuken.in" target="_blank" rel="noopener noreferrer" className="hover:underline">WWW.KEUKEN.IN</a>
                 </div>
               </div>
             </ScrollReveal>
