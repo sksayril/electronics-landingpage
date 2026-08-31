@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Search, ShoppingBag, Heart, MapPin, User, Menu, X, ArrowRight, ShieldCheck, HelpCircle } from "lucide-react";
+import { Search, ShoppingBag, Heart, MapPin, User, Menu, X, ArrowRight, ShieldCheck, HelpCircle, Download, Mail } from "lucide-react";
 import Image from "next/image";
 
 import { useApp } from "../context/AppContext";
@@ -113,11 +113,25 @@ export default function Header(props: HeaderProps) {
           <div className="flex gap-4 items-center">
             <span className="font-semibold text-brand-red">KEUKEN Connect™</span>
             <span className="h-3 w-px bg-gray-300"></span>
+            <a href="mailto:info@keuken.in" className="hover:text-black flex items-center gap-1 font-medium">
+              <Mail className="h-3 w-3 text-brand-red" /> info@keuken.in
+            </a>
+            <span className="h-3 w-px bg-gray-300"></span>
             <a href="#find-store" className="hover:text-black flex items-center gap-1">
               <MapPin className="h-3 w-3" /> Find a Store
             </a>
           </div>
           <div className="flex gap-4 items-center">
+            <a 
+              href="/KeuKen_Product_Catalogue_2026_2027_Printable.pdf" 
+              download="KeuKen_Product_Catalogue_2026_2027.pdf" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="hover:text-brand-red-hover flex items-center gap-1 font-bold text-brand-red"
+            >
+              <Download className="h-3 w-3" /> Catalogue PDF
+            </a>
+            <span className="h-3 w-px bg-gray-300"></span>
             <a href="#support" className="hover:text-black flex items-center gap-1">
               <HelpCircle className="h-3 w-3" /> Support & Help
             </a>
@@ -264,6 +278,16 @@ export default function Header(props: HeaderProps) {
             >
               Become a Partner
             </button>
+            <a 
+              href="/KeuKen_Product_Catalogue_2026_2027_Printable.pdf" 
+              download="KeuKen_Product_Catalogue_2026_2027.pdf" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              onClick={() => setIsMobileMenuOpen(false)} 
+              className="font-bold text-lg text-brand-red flex items-center gap-2 py-1"
+            >
+              <Download className="h-5 w-5" /> Download Catalogue PDF
+            </a>
             <div className="h-px bg-gray-200 my-2"></div>
             <div className="flex justify-between text-sm text-gray-500 font-medium pb-2">
               <a href="/admin" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-brand-red">Admin Panel</a>

@@ -4,7 +4,7 @@ import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import EnquirySection from "../../components/EnquirySection";
 import ScrollReveal from "../../components/ScrollReveal";
-import { Phone, Mail, MapPin, Clock } from "lucide-react";
+import { Phone, Mail, MapPin, Clock, Download } from "lucide-react";
 
 export default function ContactPage() {
   return (
@@ -24,14 +24,14 @@ export default function ContactPage() {
               Contact KEUKEN
             </h1>
             <p className="text-xs sm:text-sm text-gray-400 font-light max-w-lg mx-auto leading-relaxed">
-              Reach out to our customer care team, corporate headquarters, or register a service request. We're here to help.
+              Reach out to our customer care team, corporate headquarters, or download our official product catalogue. We're here to help.
             </p>
           </div>
         </section>
 
         {/* Contact Info cards */}
         <section className="py-16 bg-white">
-          <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-8">
+          <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
             
             {/* Call */}
             <ScrollReveal direction="up" delay={50}>
@@ -60,7 +60,7 @@ export default function ContactPage() {
                   Send us your warranty, business or general queries.
                 </p>
                 <div className="text-xs font-bold text-brand-red pt-1">
-                  connect@keuken.co.in
+                  <a href="mailto:info@keuken.in" className="hover:underline">info@keuken.in</a>
                 </div>
               </div>
             </ScrollReveal>
@@ -94,6 +94,30 @@ export default function ContactPage() {
                 <div className="text-xs font-bold text-gray-700 pt-1">
                   Mon - Sun: 9:00 AM - 8:00 PM
                 </div>
+              </div>
+            </ScrollReveal>
+
+            {/* Catalogue Download */}
+            <ScrollReveal direction="up" delay={250}>
+              <div className="border border-brand-red/30 bg-gradient-to-b from-brand-red/5 to-transparent rounded-2xl p-6 hover:shadow-lg transition-all duration-300 space-y-3 h-full flex flex-col justify-between">
+                <div>
+                  <div className="h-10 w-10 rounded-xl bg-brand-red text-white flex items-center justify-center shadow-md">
+                    <Download className="h-5 w-5" />
+                  </div>
+                  <h3 className="text-sm font-bold uppercase tracking-wider text-gray-900 mt-3">2026-27 Catalogue</h3>
+                  <p className="text-[11px] text-gray-500 font-light leading-relaxed">
+                    Download full high-res printable product brochure.
+                  </p>
+                </div>
+                <a
+                  href="/KeuKen_Product_Catalogue_2026_2027_Printable.pdf"
+                  download="KeuKen_Product_Catalogue_2026_2027.pdf"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center gap-1.5 w-full py-2 px-3 bg-brand-red hover:bg-brand-red-hover text-white rounded-xl text-xs font-bold uppercase tracking-wider transition-colors text-center"
+                >
+                  Download PDF
+                </a>
               </div>
             </ScrollReveal>
 

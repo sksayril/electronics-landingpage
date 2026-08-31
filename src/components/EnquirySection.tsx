@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Send, CheckCircle, AlertCircle, Phone, Mail, User, MessageSquare } from "lucide-react";
+import { Send, CheckCircle, AlertCircle, Phone, Mail, User, MessageSquare, Download, FileText } from "lucide-react";
 import { useApp } from "../context/AppContext";
 
 export default function EnquirySection() {
@@ -148,8 +148,33 @@ export default function EnquirySection() {
                 </div>
                 <div>
                   <p className="font-semibold">Email Enquiries</p>
-                  <p className="text-xs text-gray-450 font-light">connect@keuken.co.in</p>
+                  <a href="mailto:info@keuken.in" className="text-xs text-brand-red hover:underline font-light">info@keuken.in</a>
                 </div>
+              </div>
+
+              {/* Product Catalogue Download Card */}
+              <div className="pt-2">
+                <a
+                  href="/KeuKen_Product_Catalogue_2026_2027_Printable.pdf"
+                  download="KeuKen_Product_Catalogue_2026_2027.pdf"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-3 p-3.5 rounded-2xl bg-gradient-to-r from-zinc-900 to-zinc-900/80 border border-zinc-800 hover:border-brand-red/60 text-gray-300 hover:text-white transition-all duration-300 group cursor-pointer shadow-lg hover:shadow-brand-red/5"
+                >
+                  <div className="h-10 w-10 rounded-xl bg-brand-red/15 group-hover:bg-brand-red text-brand-red group-hover:text-white flex items-center justify-center shrink-0 transition-colors">
+                    <Download className="h-5 w-5" />
+                  </div>
+                  <div className="flex-1">
+                    <div className="flex items-center gap-2">
+                      <p className="font-bold text-xs text-white uppercase tracking-wider">2026-2027 Catalogue</p>
+                      <span className="text-[9px] bg-brand-red/20 text-brand-red px-1.5 py-0.5 rounded font-mono">PDF</span>
+                    </div>
+                    <p className="text-[11px] text-gray-400 group-hover:text-gray-200 font-light mt-0.5">
+                      Download printable product brochure
+                    </p>
+                  </div>
+                  <FileText className="h-4 w-4 text-gray-500 group-hover:text-white transition-colors" />
+                </a>
               </div>
             </div>
           </div>

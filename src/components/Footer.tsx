@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { ArrowUp, MessageSquare, Send, X } from "lucide-react";
+import { ArrowUp, MessageSquare, Send, X, Download, Mail, FileText } from "lucide-react";
 
 const FacebookIcon = () => (
   <svg className="h-5 w-5 fill-none stroke-current stroke-2" viewBox="0 0 24 24" strokeLinecap="round" strokeLinejoin="round">
@@ -132,11 +132,22 @@ export default function Footer() {
             Support & Help
           </h4>
           <ul className="space-y-2 font-medium">
+            <li>
+              <a 
+                href="/KeuKen_Product_Catalogue_2026_2027_Printable.pdf" 
+                download="KeuKen_Product_Catalogue_2026_2027.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-brand-red font-bold hover:text-brand-red-hover hover:underline transition-colors flex items-center gap-1.5"
+              >
+                <Download className="h-3.5 w-3.5" /> Download 2026-27 Catalogue (PDF)
+              </a>
+            </li>
             <li><a href="#support" className="hover:text-white transition-colors">Register a Product</a></li>
             <li><a href="#support" className="hover:text-white transition-colors">Request Repair Service</a></li>
             <li><a href="#support" className="hover:text-white transition-colors">Download User Manuals</a></li>
             <li><a href="#support" className="hover:text-white transition-colors">Track Service Request</a></li>
-            <li className="pt-1"><a href="/admin" className="text-brand-red font-bold hover:text-brand-red-hover hover:underline transition-colors flex items-center gap-1">Admin Dashboard</a></li>
+            <li className="pt-1"><a href="/admin" className="text-gray-400 font-medium hover:text-brand-red hover:underline transition-colors flex items-center gap-1">Admin Dashboard</a></li>
           </ul>
         </div>
 
@@ -147,8 +158,12 @@ export default function Footer() {
         
         {/* Left Side */}
         <div className="flex flex-col gap-2 text-center md:text-left">
-          <p className="text-gray-500 text-xs">
-            © {new Date().getFullYear()} KEUKEN Electronics India. All rights reserved.
+          <p className="text-gray-400 text-xs flex items-center justify-center md:justify-start gap-2">
+            <span>© {new Date().getFullYear()} KEUKEN Electronics India. All rights reserved.</span>
+            <span className="text-zinc-700">•</span>
+            <a href="mailto:info@keuken.in" className="text-brand-red hover:underline flex items-center gap-1 font-semibold">
+              <Mail className="h-3 w-3" /> info@keuken.in
+            </a>
           </p>
           <p className="text-[10px] text-gray-600 max-w-md leading-relaxed font-light">
             Disclaimer: This application is a high-fidelity simulated landing page showcase demonstrating Next.js App Router and Tailwind CSS. All trademarks are the property of their respective owners.

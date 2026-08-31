@@ -4,7 +4,7 @@ import { useState, useMemo, useEffect } from "react";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import { useApp } from "../../context/AppContext";
-import { Search, ShoppingCart, Heart, Filter, ArrowUpDown } from "lucide-react";
+import { Search, ShoppingCart, Heart, Filter, ArrowUpDown, Download, FileText } from "lucide-react";
 import Image from "next/image";
 
 interface Product {
@@ -93,7 +93,7 @@ export default function ProductsPage() {
       <main className="flex-grow max-w-7xl mx-auto w-full px-4 sm:px-6 py-12">
         
         {/* Page Title & Search Bar Area */}
-        <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-6 mb-10 pb-6 border-b border-gray-100">
+        <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-6 mb-8 pb-6 border-b border-gray-100">
           <div>
             <h1 className="text-3xl sm:text-4xl font-extrabold uppercase tracking-tight text-[#111111]">
               Premium Catalog
@@ -103,16 +103,28 @@ export default function ProductsPage() {
             </p>
           </div>
 
-          {/* Search input */}
-          <div className="relative w-full md:w-80">
-            <input
-              type="text"
-              placeholder="Search products or features..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full h-11 pl-11 pr-4 rounded-full border border-gray-300 focus:outline-none focus:border-brand-red text-sm text-[#111111]"
-            />
-            <Search className="absolute left-4 top-3.5 h-4.5 w-4.5 text-gray-400" />
+          {/* Search & Catalogue Download CTA */}
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full md:w-auto">
+            <a
+              href="/KeuKen_Product_Catalogue_2026_2027_Printable.pdf"
+              download="KeuKen_Product_Catalogue_2026_2027.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center justify-center gap-2 bg-zinc-900 hover:bg-black text-white px-5 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider transition-all shadow-sm hover:shadow-md border border-zinc-800 whitespace-nowrap"
+            >
+              <Download className="h-4 w-4 text-brand-red" /> Download Catalogue PDF
+            </a>
+
+            <div className="relative w-full sm:w-72">
+              <input
+                type="text"
+                placeholder="Search products..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="w-full h-11 pl-11 pr-4 rounded-full border border-gray-300 focus:outline-none focus:border-brand-red text-sm text-[#111111]"
+              />
+              <Search className="absolute left-4 top-3.5 h-4.5 w-4.5 text-gray-400" />
+            </div>
           </div>
         </div>
 
