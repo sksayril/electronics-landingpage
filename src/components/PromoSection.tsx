@@ -1,8 +1,19 @@
 "use client";
 
 import { ShieldCheck, Award, ArrowRight, RefreshCw, BadgePercent } from "lucide-react";
+import { useApp } from "../context/AppContext";
 
 export default function PromoSection() {
+  const { triggerEnquiry } = useApp();
+
+  const handleAmcClick = () => {
+    triggerEnquiry("Annual Maintenance & Warranty (AMC Plan)");
+  };
+
+  const handleExchangeClick = () => {
+    triggerEnquiry("Exchange & Upgrade Promo (Trade-in Value Check)");
+  };
+
   return (
     <section id="offers" className="py-16 bg-white border-b border-gray-100">
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
@@ -30,7 +41,10 @@ export default function PromoSection() {
               <span className="text-xs font-semibold text-red-300">
                 15% Discount on AMC Bookings this week
               </span>
-              <button className="flex items-center gap-2 px-6 py-2.5 bg-brand-red hover:bg-brand-red-hover text-white text-xs font-bold rounded-full transition-colors cursor-pointer self-start sm:self-auto group-hover:translate-x-1 duration-200">
+              <button 
+                onClick={handleAmcClick}
+                className="flex items-center gap-2 px-6 py-2.5 bg-brand-red hover:bg-brand-red-hover text-white text-xs font-bold rounded-full transition-colors cursor-pointer self-start sm:self-auto group-hover:translate-x-1 duration-200"
+              >
                 Register AMC Plan <ArrowRight className="h-4 w-4" />
               </button>
             </div>
@@ -59,7 +73,10 @@ export default function PromoSection() {
               <span className="text-xs font-semibold text-gray-500 flex items-center gap-1">
                 <BadgePercent className="h-4 w-4 text-brand-red" /> No-cost EMIs starting from ₹2,999/month
               </span>
-              <button className="flex items-center gap-2 px-6 py-2.5 bg-[#202020] hover:bg-brand-red hover:text-white text-white text-xs font-bold rounded-full transition-colors cursor-pointer self-start sm:self-auto group-hover:translate-x-1 duration-200">
+              <button 
+                onClick={handleExchangeClick}
+                className="flex items-center gap-2 px-6 py-2.5 bg-[#202020] hover:bg-brand-red hover:text-white text-white text-xs font-bold rounded-full transition-colors cursor-pointer self-start sm:self-auto group-hover:translate-x-1 duration-200"
+              >
                 Check Value <ArrowRight className="h-4 w-4" />
               </button>
             </div>

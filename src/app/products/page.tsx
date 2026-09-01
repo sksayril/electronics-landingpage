@@ -29,6 +29,18 @@ export default function ProductsPage() {
   const [sortBy, setSortBy] = useState<"price-low" | "price-high" | "rating">("rating");
 
   useEffect(() => {
+    if (typeof window !== "undefined") {
+      const params = new URLSearchParams(window.location.search);
+      const catParam = params.get("category");
+      if (catParam === "tv" || catParam === "appliance" || catParam === "ac" || catParam === "laptop" || catParam === "all") {
+        setSelectedCategory(catParam);
+      }
+      const searchParam = params.get("search");
+      if (searchParam) {
+        setSearchQuery(searchParam);
+      }
+    }
+
     const fetchProducts = async () => {
       try {
         const response = await fetch("/api/products");
@@ -40,6 +52,7 @@ export default function ProductsPage() {
             if (p.category === "appliances") cat = "appliance";
             else if (p.category === "ac") cat = "ac";
             else if (p.category === "monitors") cat = "laptop";
+            else if (p.category === "tvs") cat = "tv";
 
             return {
               id: p._id || p.id,

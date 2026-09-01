@@ -23,8 +23,9 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     <html
       lang="en"
       className={`${outfit.variable} h-full antialiased`}
+      suppressHydrationWarning
     >
-      <body className="min-h-full flex flex-col font-sans bg-white text-[#111111]">
+      <body className="min-h-full flex flex-col font-sans bg-white text-[#111111]" suppressHydrationWarning>
         <AppProvider>
           <CustomCursor />
           <GateLoader />

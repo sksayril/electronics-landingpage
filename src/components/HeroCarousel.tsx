@@ -23,36 +23,47 @@ export default function HeroCarousel() {
   const slides: Slide[] = [
     {
       id: 1,
-      image: "/images/hero_oled_tv.png",
-      badge: "NEW LAUNCH",
-      title: "KEUKEN OLED evo C4 Series",
-      description: "Experience the pinnacle of brightness and detail. Driven by the new α9 Gen7 AI Processor, pixel-level dimming delivers pure blacks and endless contrast.",
-      features: ["α9 AI Processor Gen7", "Brightness Booster Max", "144Hz Gaming Refresh Rate", "Dolby Vision & Atmos"],
-      ctaUrl: "#tvs",
-      ctaText: "Buy OLED TV",
-      bgColor: "from-black via-[#0d0d0d] to-zinc-900",
+      image: "/images/hero_water_purifier.jpg",
+      badge: "MODEL MAHANADI",
+      title: "KEUKEN Smart Water Purifier",
+      description: "Advanced Purification. Pure Perfection. Powered by Zinc + Copper + Alkaline filtration technology with smart LED display for 100% healthy pure water.",
+      features: ["Smart LED Display", "Zinc + Copper + Alkaline", "Advanced RO Purification", "Food-Grade Metallic Body"],
+      ctaUrl: "#enquire",
+      ctaText: "Get Best Quote",
+      bgColor: "from-zinc-950 via-[#1a0a1e] to-[#250d2b]",
     },
     {
       id: 2,
-      image: "/images/hero_refrigerator.png",
-      badge: "EXCLUSIVE UPGRADE",
-      title: "InstaView® Door-in-Door®",
-      description: "Knock twice and see inside without losing cold air. Featuring Linear Cooling™ and Door Cooling+™ to keep food fresh for up to 7 days.",
-      features: ["ThinQ® Connected App", "Hygiene Fresh+™ UV Filter", "Craft Ice Maker Built-in", "Inverter Linear Compressor"],
+      image: "/images/hero_inverter_ac.jpg",
+      badge: "5-IN-1 CONVERTIBLE",
+      title: "KEUKEN Inverter Air Conditioner",
+      description: "Supercharged cooling with 5-in-1 convertible modes, 100% Copper Golden Fin Evaporator, and Rapid Cooling: 18°C in just 45 seconds.",
+      features: ["Rapid Cooling: 18°C in 45s", "Golden Fin Evaporator", "12m Long Air Throw", "Anti-Viral Dust Filter"],
       ctaUrl: "#appliances",
-      ctaText: "Explore InstaView",
-      bgColor: "from-[#1a1a1a] via-[#101010] to-[#121212]",
+      ctaText: "Explore Smart ACs",
+      bgColor: "from-[#08131e] via-[#091b2c] to-[#040e18]",
     },
     {
       id: 3,
-      image: "/images/hero_oled_tv.png", // Re-use or use a CSS/gradient presentation
-      badge: "SMART LIVING",
-      title: "AI Dual Inverter Air Conditioner",
-      description: "Supercharged cooling powered by AI DUAL Inverter technology. Adjusts fan speeds and compressor output automatically based on ambient room diagnostics.",
-      features: ["Super Convertible 6-in-1", "PM 1.0 Smart Air Purifier", "100% Copper with Ocean Black protection", "10-Year Compressor Warranty"],
-      ctaUrl: "#ac",
-      ctaText: "Explore Smart ACs",
-      bgColor: "from-zinc-950 via-[#0a0f1d] to-[#0c142c]",
+      image: "/images/hero_washing_machine.jpg",
+      badge: "VEGA & AROHAN SERIES",
+      title: "KEUKEN Twin Tub Washers",
+      description: "Heavy Duty Motor powered top load washing machines. Featuring toughened glass lids, rust-proof body, and powerful roller pulsator.",
+      features: ["Heavy Duty Motor", "Toughened Glass Lids", "Rust-Proof Body", "Multiple Wash Programs"],
+      ctaUrl: "#appliances",
+      ctaText: "Explore Washers",
+      bgColor: "from-[#171615] via-[#211f1c] to-[#121110]",
+    },
+    {
+      id: 4,
+      image: "/images/hero_smart_tv.jpg",
+      badge: "ANDROID AOSP SMART TV",
+      title: "KEUKEN Smart TV Series",
+      description: "Experience ultra-vivid entertainment with A+ Grade Panels, Quad Core Processor, Side Firing Box Speakers, and Voice Command Remote.",
+      features: ["A+ Grade HD/FHD Panel", "Quad Core Processor", "Side Firing Box Speaker", "Voice Command Remote"],
+      ctaUrl: "/products",
+      ctaText: "View TV Range",
+      bgColor: "from-black via-[#0d0d0d] to-zinc-900",
     },
   ];
 
@@ -84,28 +95,17 @@ export default function HeroCarousel() {
             }`}
           >
             {/* Background Image / Gradient */}
-            <div className={`absolute inset-0 bg-gradient-to-r ${slide.bgColor} opacity-90 z-0`}></div>
+            <div className={`absolute inset-0 bg-gradient-to-r ${slide.bgColor} opacity-85 z-0`}></div>
             
             {/* Slide Image */}
-            <div className="absolute inset-0 w-full h-full z-0 opacity-40 sm:opacity-55 mix-blend-screen md:mix-blend-normal">
-              {/* If it's slide 3, we can render a beautiful CSS grid graphic overlay for smart AC to make it look unique */}
-              {slide.id === 3 ? (
-                <div className="absolute inset-0 bg-gradient-to-tr from-cyan-950/40 via-blue-900/20 to-brand-red/10 flex items-center justify-end pr-20">
-                  <div className="w-[450px] h-[450px] border border-cyan-500/20 rounded-full flex items-center justify-center animate-pulse">
-                    <div className="w-[300px] h-[300px] border border-cyan-500/30 rounded-full flex items-center justify-center">
-                      <div className="w-[150px] h-[150px] bg-gradient-to-br from-cyan-500/20 to-blue-600/30 rounded-full blur-xl"></div>
-                    </div>
-                  </div>
-                </div>
-              ) : (
-                <Image
-                  src={slide.image}
-                  alt={slide.title}
-                  fill
-                  priority={idx === 0}
-                  className={`object-cover object-right md:object-center ${idx === currentSlide ? "animate-ken-burns" : ""}`}
-                />
-              )}
+            <div className="absolute inset-0 w-full h-full z-0 opacity-50 sm:opacity-65 mix-blend-screen md:mix-blend-normal">
+              <Image
+                src={slide.image}
+                alt={slide.title}
+                fill
+                priority={idx === 0}
+                className={`object-cover object-right md:object-center ${idx === currentSlide ? "animate-ken-burns" : ""}`}
+              />
             </div>
 
             {/* Content Content Container */}

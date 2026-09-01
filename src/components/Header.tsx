@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Search, ShoppingBag, Heart, MapPin, User, Menu, X, ArrowRight, ShieldCheck, HelpCircle, Download, Mail, Phone } from "lucide-react";
 import Image from "next/image";
 
@@ -27,7 +27,36 @@ export default function Header(props: HeaderProps) {
   const [tempPincode, setTempPincode] = useState(postalCode);
   const [showSearchOverlay, setShowSearchOverlay] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
+  const [allProducts, setAllProducts] = useState<any[]>([]);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  useEffect(() => {
+    if (showSearchOverlay && allProducts.length === 0) {
+      fetch("/api/products")
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.success) setAllProducts(data.data);
+        })
+        .catch((err) => console.error(err));
+    }
+  }, [showSearchOverlay, allProducts.length]);
+
+  const searchResults = searchQuery.trim()
+    ? allProducts.filter((p) =>
+        p.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        p.model?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        p.category?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        p.features?.some((f: string) => f.toLowerCase().includes(searchQuery.toLowerCase()))
+      )
+    : [];
+
+  const formatPrice = (value: number) => {
+    return new Intl.NumberFormat("en-IN", {
+      style: "currency",
+      currency: "INR",
+      maximumFractionDigits: 0,
+    }).format(value);
+  };
 
   // Become a Partner state
   const [showPartnerModal, setShowPartnerModal] = useState(false);
@@ -179,7 +208,6 @@ export default function Header(props: HeaderProps) {
           <nav className="hidden md:flex gap-5 lg:gap-6 font-semibold text-[#111111] text-[13px] lg:text-[14px] items-center">
             <a href="/" className="hover:text-brand-red transition-colors py-2 border-b-2 border-transparent hover:border-brand-red">Home</a>
             <a href="/products" className="hover:text-brand-red transition-colors py-2 border-b-2 border-transparent hover:border-brand-red">Products</a>
-            <a href="/#tvs" className="hover:text-brand-red transition-colors py-2 border-b-2 border-transparent hover:border-brand-red">TV & Audio</a>
             <a href="/#appliances" className="hover:text-brand-red transition-colors py-2 border-b-2 border-transparent hover:border-brand-red">Appliances</a>
             <a href="/about" className="hover:text-brand-red transition-colors py-2 border-b-2 border-transparent hover:border-brand-red">About Us</a>
             <a href="/contact" className="hover:text-brand-red transition-colors py-2 border-b-2 border-transparent hover:border-brand-red">Contact</a>
@@ -199,17 +227,33 @@ export default function Header(props: HeaderProps) {
           <div className="flex items-center gap-2 sm:gap-4 flex-1 md:flex-none justify-end">
             
             {/* Search Input Bar (Desktop) */}
-            <div className="relative hidden lg:block w-64 xl:w-72">
+            <form 
+              onSubmit={(e) => {
+                e.preventDefault();
+                if (searchQuery.trim()) {
+                  window.location.href = `/products?search=${encodeURIComponent(searchQuery.trim())}`;
+                } else {
+                  setShowSearchOverlay(true);
+                }
+              }}
+              className="relative hidden lg:block w-64 xl:w-72"
+            >
               <input
                 type="text"
-                placeholder="Search OLED TVs, Washing Machines..."
+                placeholder="Search Water Purifiers, TVs, ACs..."
                 className="w-full h-10 pl-4 pr-10 rounded-full border border-gray-300 focus:outline-none focus:border-brand-red text-sm"
-                onClick={() => setShowSearchOverlay(true)}
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
+                onFocus={() => setShowSearchOverlay(true)}
               />
-              <Search className="absolute right-3 top-2.5 h-5 w-5 text-gray-400" />
-            </div>
+              <button 
+                type="submit" 
+                className="absolute right-3 top-2.5 text-gray-400 hover:text-brand-red transition-colors cursor-pointer"
+                aria-label="Search"
+              >
+                <Search className="h-5 w-5" />
+              </button>
+            </form>
 
             {/* Mobile/Tablet Search Button */}
             <button 
@@ -229,11 +273,6 @@ export default function Header(props: HeaderProps) {
               <span className="font-bold">{postalCode || "Set Pincode"}</span>
             </button>
 
-            {/* User Icon */}
-            <button className="p-2 text-gray-700 hover:text-brand-red hover:bg-gray-100 rounded-full transition-colors hidden sm:block">
-              <User className="h-5 sm:h-6 sm:w-6 w-5" />
-            </button>
-
             {/* Wishlist Icon */}
             <button 
               onClick={openWishlistModal}
@@ -248,19 +287,6 @@ export default function Header(props: HeaderProps) {
               )}
             </button>
 
-            {/* Cart Icon */}
-            <button 
-              className="relative p-2 text-gray-700 hover:text-brand-red hover:bg-gray-100 rounded-full transition-colors"
-              aria-label="Shopping Cart"
-            >
-              <ShoppingBag className="h-5 sm:h-6 sm:w-6 w-5" />
-              {cartCount > 0 && (
-                <span className="absolute top-1 right-1 bg-brand-red text-white text-[9px] font-bold h-4 w-4 rounded-full flex items-center justify-center">
-                  {cartCount}
-                </span>
-              )}
-            </button>
-
           </div>
         </div>
 
@@ -269,7 +295,6 @@ export default function Header(props: HeaderProps) {
           <div className="md:hidden absolute top-16 sm:top-20 left-0 w-full bg-white border-b border-gray-200 shadow-lg py-4 px-6 flex flex-col gap-4 z-50 animate-slide-up text-[#111111]">
             <a href="/" onClick={() => setIsMobileMenuOpen(false)} className="font-bold text-lg hover:text-brand-red py-1">Home</a>
             <a href="/products" onClick={() => setIsMobileMenuOpen(false)} className="font-bold text-lg hover:text-brand-red py-1">Our Products</a>
-            <a href="/#tvs" onClick={() => setIsMobileMenuOpen(false)} className="font-bold text-lg hover:text-brand-red py-1">TV & Audio</a>
             <a href="/#appliances" onClick={() => setIsMobileMenuOpen(false)} className="font-bold text-lg hover:text-brand-red py-1">Home Appliances</a>
             <a href="/about" onClick={() => setIsMobileMenuOpen(false)} className="font-bold text-lg hover:text-brand-red py-1">About Us</a>
             <a href="/contact" onClick={() => setIsMobileMenuOpen(false)} className="font-bold text-lg hover:text-brand-red py-1">Contact Us</a>
@@ -347,29 +372,106 @@ export default function Header(props: HeaderProps) {
       {/* Interactive Search Overlay */}
       {showSearchOverlay && (
         <div className="fixed inset-0 z-50 bg-black/50 backdrop-blur-xs animate-fade-in">
-          <div className="bg-white border-b border-gray-200 shadow-xl w-full p-6 animate-slide-up">
+          <div className="bg-white border-b border-gray-200 shadow-xl w-full p-6 animate-slide-up max-h-[85vh] overflow-y-auto">
             <div className="max-w-3xl mx-auto">
               {/* Search Bar Inner */}
-              <div className="flex items-center gap-4 border-b-2 border-brand-red pb-3">
-                <Search className="h-6 w-6 text-brand-red" />
+              <form 
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  if (searchQuery.trim()) {
+                    setShowSearchOverlay(false);
+                    window.location.href = `/products?search=${encodeURIComponent(searchQuery.trim())}`;
+                  }
+                }}
+                className="flex items-center gap-4 border-b-2 border-brand-red pb-3"
+              >
+                <Search className="h-6 w-6 text-brand-red shrink-0" />
                 <input
                   type="text"
-                  placeholder="What electronics are you looking for today?"
-                  className="flex-1 bg-transparent text-xl font-medium focus:outline-none text-[#111111]"
+                  placeholder="Search KEUKEN OLED TVs, Water Purifiers, ACs..."
+                  className="flex-1 bg-transparent text-lg sm:text-xl font-medium focus:outline-none text-[#111111]"
                   autoFocus
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                 />
+                {searchQuery.trim() && (
+                  <button
+                    type="submit"
+                    className="px-4 py-1.5 bg-brand-red text-white text-xs font-bold rounded-full hover:bg-brand-red-hover transition-colors whitespace-nowrap cursor-pointer"
+                  >
+                    Search Catalog
+                  </button>
+                )}
                 <button 
+                  type="button"
                   onClick={() => {
                     setShowSearchOverlay(false);
                     setSearchQuery("");
                   }}
-                  className="p-1 hover:bg-gray-100 rounded-full transition-colors"
+                  className="p-1 hover:bg-gray-100 rounded-full transition-colors shrink-0 cursor-pointer"
                 >
                   <X className="h-6 w-6 text-gray-500" />
                 </button>
-              </div>
+              </form>
+
+              {/* Live Search Results */}
+              {searchQuery.trim() && (
+                <div className="mt-6">
+                  <div className="flex justify-between items-center mb-3">
+                    <h4 className="text-xs font-bold text-gray-400 uppercase tracking-wider">
+                      Matching Products ({searchResults.length})
+                    </h4>
+                    {searchResults.length > 0 && (
+                      <button
+                        onClick={() => {
+                          setShowSearchOverlay(false);
+                          window.location.href = `/products?search=${encodeURIComponent(searchQuery.trim())}`;
+                        }}
+                        className="text-xs font-bold text-brand-red hover:underline"
+                      >
+                        View All Results &rarr;
+                      </button>
+                    )}
+                  </div>
+
+                  {searchResults.length > 0 ? (
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 max-h-64 overflow-y-auto pr-1">
+                      {searchResults.map((prod: any) => (
+                        <div
+                          key={prod._id || prod.id}
+                          onClick={() => {
+                            setShowSearchOverlay(false);
+                            window.location.href = `/products?search=${encodeURIComponent(prod.name)}`;
+                          }}
+                          className="flex items-center gap-3 p-3 rounded-xl border border-gray-100 hover:border-brand-red hover:bg-gray-50 transition-all cursor-pointer bg-white shadow-xs"
+                        >
+                          <div className="relative h-14 w-14 rounded-lg bg-gray-100 overflow-hidden shrink-0 border border-gray-200">
+                            <Image src={prod.image} alt={prod.name} fill className="object-cover" />
+                          </div>
+                          <div className="flex-1 min-w-0">
+                            <h5 className="text-xs font-bold text-gray-900 truncate">{prod.name}</h5>
+                            <p className="text-[10px] text-gray-400 font-medium truncate">{prod.model || prod.badge}</p>
+                            <span className="text-xs text-brand-red font-extrabold block mt-0.5">{formatPrice(prod.price)}</span>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  ) : (
+                    <div className="text-center py-6 bg-gray-50 rounded-2xl border border-dashed border-gray-200">
+                      <p className="text-xs text-gray-500 font-medium">No products found matching "{searchQuery}"</p>
+                      <button
+                        onClick={() => {
+                          setShowSearchOverlay(false);
+                          window.location.href = `/products?search=${encodeURIComponent(searchQuery.trim())}`;
+                        }}
+                        className="mt-2 text-xs text-brand-red font-bold hover:underline"
+                      >
+                        Search Full Catalog &rarr;
+                      </button>
+                    </div>
+                  )}
+                </div>
+              )}
 
               {/* Trending Searches Grid */}
               <div className="mt-6">
@@ -381,11 +483,7 @@ export default function Header(props: HeaderProps) {
                       onClick={() => {
                         setSearchQuery(term);
                         setShowSearchOverlay(false);
-                        // Optional scroll to corresponding section
-                        const section = term.toLowerCase().includes("tv") ? "tvs" :
-                                        term.toLowerCase().includes("refrigerator") || term.toLowerCase().includes("washing") ? "appliances" :
-                                        term.toLowerCase().includes("ac") ? "ac" : "monitors";
-                        document.getElementById(section)?.scrollIntoView({ behavior: "smooth" });
+                        window.location.href = `/products?search=${encodeURIComponent(term)}`;
                       }}
                       className="px-4 py-2 bg-gray-100 hover:bg-brand-red hover:text-white rounded-full text-sm text-gray-700 transition-all font-medium cursor-pointer"
                     >
